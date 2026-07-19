@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EC販売事業 | 株式会社ICHIHO</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="pages.css">
+</head>
+<body class="page--ec">
+<div id="root" data-screen-label="EC販売事業"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script>
+window.PAGE_DATA = {
+  key: "ec",
+  no: "4-1",
+  anchor: "EC SALES",
+  title: "EC販売事業",
+  titleLines: [
+    { text: "商品価値を、" },
+    { text: "最適な市場へ。", accent: true },
+  ],
+  lead: "家電・日用品・食品・ホビー用品など幅広い商品を、Amazon・楽天市場・メルカリShopsなど複数のECモールで販売しています。市場動向を読み、それぞれの商品に最適なチャネルを選定します。",
+  facts: [
+    ["主な販売チャネル", "Amazon / 楽天市場 / メルカリShops ほか"],
+    ["取扱ジャンル", "家電・日用品・食品・ホビー"],
+    ["運営体制", "仕入れ〜出荷まで自社一貫"],
+  ],
+  overview: {
+    title: "事業概要",
+    paras: [
+      "私たちは、商品が持つ本来の価値を見極め、それを必要とするお客様へ最適な形で届けることを大切にしています。<strong>仕入れから商品登録、価格設定、在庫管理、販促、出荷まで</strong>を自社で一貫して管理し、スピーディかつ丁寧な対応を実現します。",
+      "複数のECモールに蓄積した<strong>豊富な販売データ</strong>をもとに、商品ごとに最適な販売チャネルと価格戦略を選定。お客様にとって「安心して購入できる信頼のショップ」であり続けることを目指しています。",
+    ],
+  },
+  features: {
+    anchor: "STRENGTHS",
+    title: "EC販売の強み",
+    sub: "データと運営力で、商品価値を最大化します。",
+    items: [
+      { t: "マルチチャネル展開", d: "Amazon・楽天市場・メルカリShops・ヤフオク!・eBayなど、国内外の主要モールに対応。商品特性に応じて最適な販路を選定します。" },
+      { t: "販売データの活用", d: "売れ筋動向・価格相場・需要の波を分析し、出品タイミングと価格を最適化。データドリブンな販売を行います。" },
+      { t: "自社一貫の運営体制", d: "仕入れ・登録・在庫・出荷までを社内で完結。中間コストを抑え、迅速で安定した供給を実現します。" },
+      { t: "丁寧なカスタマー対応", d: "問い合わせ・配送・アフターまで誠実に対応。レビューと信頼を積み重ねる運営を徹底しています。" },
+    ],
+  },
+  categories: {
+    anchor: "CHANNELS",
+    title: "取扱販売チャネル",
+    chips: true,
+    items: [
+      { en: "AMAZON", t: "Amazon" },
+      { en: "RAKUTEN", t: "楽天市場" },
+      { en: "MERCARI", t: "メルカリShops" },
+      { en: "YAHOO", t: "ヤフオク!" },
+      { en: "EBAY", t: "eBay" },
+    ],
+  },
+  cta: {
+    head: "出品・卸・取引のご相談を承ります。",
+    sub: "商品の販売委託、卸取引、ECモール運営に関するご相談など、お気軽にお問い合わせください。",
+  },
+};
+</script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="detail.jsx"></script>
+</body>
+</html>

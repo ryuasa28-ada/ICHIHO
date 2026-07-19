@@ -1,0 +1,300 @@
+/* =========================================================
+   東海オンラインショップ Design System — Tokens & Base Type
+   ---------------------------------------------------------
+   Load this file FIRST on every page. It defines the design
+   tokens as CSS custom properties and applies a minimal,
+   opinionated base layer.
+
+   Webfonts: Google Fonts CDN (Noto Sans JP, Noto Serif JP, Inter).
+   ========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap");
+
+:root {
+  /* ---------- Color: ink & neutrals ---------- */
+  --ink:          #0E1320;       /* slight blue undertone */
+  --ink-2:        #232A3A;
+  --mute:         #6F7689;
+  --line:         #DDE3EC;       /* cool hairline */
+  --paper:        #F4F6F9;       /* cool-paper canvas (海霧 mist) */
+  --paper-2:      #E9EDF3;       /* sectional surface */
+  --cloud:        #FFFFFF;
+
+  /* ---------- Color: brand ---------- */
+  --indigo:       #1F3D6B;       /* primary — 駿河湾 / リユース / links */
+  --indigo-ink:   #122847;
+  --sky:          #6B9BD1;       /* sky / light water */
+  --tea:          #5A7C4E;       /* 茶畑 — natural secondary */
+  --sunrise:      #D17A3F;       /* 富士朝焼け — accent / 新品 / prices */
+  --sunrise-ink:  #9C521E;
+  --sand:         #E8DFCF;       /* warm fill (sparingly) */
+
+  /* ---------- Legacy aliases (do not use in new code) ---------- */
+  --forest:       var(--indigo);
+  --forest-ink:   var(--indigo-ink);
+  --moss:         var(--sky);
+  --terracotta:   var(--sunrise);
+  --terracotta-ink:var(--sunrise-ink);
+
+  /* ---------- Color: semantic ---------- */
+  --ok:           #3E7C4E;
+  --warn:         #B7833A;
+  --danger:       #A4452F;
+
+  /* ---------- Type: families ---------- */
+  --font-jp:      "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --font-en:      "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif:   "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+
+  /* ---------- Type: scale (px) ---------- */
+  --display-xl:   64px;
+  --display:      48px;
+  --h1:           36px;
+  --h2:           28px;
+  --h3:           20px;
+  --lead:         18px;
+  --body:         16px;
+  --small:        14px;
+  --micro:        12px;
+  --anchor:       13px;
+
+  /* ---------- Type: leading ---------- */
+  --lh-tight:     1.1;
+  --lh-snug:      1.3;
+  --lh-normal:    1.65;
+  --lh-loose:     1.8;   /* JP body needs more leading */
+
+  /* ---------- Spacing (4-pt) ---------- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* ---------- Radii ---------- */
+  --r-1:  4px;
+  --r-2:  8px;
+  --r-3:  12px;
+  --r-4:  20px;
+  --r-full: 999px;
+
+  /* ---------- Shadows ---------- */
+  --shadow-1: 0 1px 2px rgba(18,40,71,0.04);
+  --shadow-2: 0 4px 16px rgba(18,40,71,0.07);
+  --shadow-3: 0 12px 40px rgba(18,40,71,0.12);
+
+  /* ---------- Motion ---------- */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dur-micro:  160ms;
+  --dur-state:  240ms;
+  --dur-enter:  360ms;
+
+  /* ---------- Layout ---------- */
+  --container:  1240px;
+  --gutter:     24px;
+  --gutter-lg:  48px;
+  --header-h:   64px;
+}
+
+/* =========================================================
+   Reset (minimal)
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-jp);
+  font-size: var(--body);
+  line-height: var(--lh-loose);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg, video { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; background: none; border: 0; padding: 0; color: inherit; }
+a { color: var(--forest); text-decoration: none; transition: color var(--dur-micro) var(--ease); }
+a:hover { color: var(--forest-ink); }
+
+/* =========================================================
+   Semantic type
+   ========================================================= */
+.display-xl, .display, .h1, .h2, .h3 {
+  font-family: var(--font-jp);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+.display-xl { font-size: var(--display-xl); font-weight: 300; line-height: var(--lh-tight); letter-spacing: -0.02em; }
+.display    { font-size: var(--display);    font-weight: 300; line-height: var(--lh-tight); letter-spacing: -0.02em; }
+.h1         { font-size: var(--h1);         line-height: var(--lh-snug);  }
+.h2         { font-size: var(--h2);         line-height: var(--lh-snug);  }
+.h3         { font-size: var(--h3);         font-weight: 500; line-height: var(--lh-snug); }
+
+.lead       { font-size: var(--lead); line-height: var(--lh-normal); color: var(--ink-2); font-weight: 400; }
+.body       { font-size: var(--body); line-height: var(--lh-loose); color: var(--ink-2); }
+.small      { font-size: var(--small); line-height: var(--lh-normal); color: var(--mute); }
+.micro      { font-size: var(--micro); line-height: var(--lh-snug);  color: var(--mute); }
+
+/* The signature Payn-inspired English section marker */
+.anchor {
+  font-family: var(--font-en);
+  font-size: var(--anchor);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  color: var(--forest);
+  display: inline-block;
+}
+
+/* Numeric & english runs inside JP content */
+.num, .en {
+  font-family: var(--font-en);
+  font-feature-settings: "tnum" 1;
+}
+
+/* Editorial serif for philosophy / quotes */
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* =========================================================
+   Layout helpers
+   ========================================================= */
+.container { max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+@media (min-width: 768px) { .container { padding-inline: var(--gutter-lg); } }
+.section { padding-block: var(--s-9); }
+@media (max-width: 768px) { .section { padding-block: var(--s-7); } }
+.hairline { height: 1px; background: var(--line); border: 0; margin: 0; }
+
+/* =========================================================
+   Buttons (primitives)
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: 12px 20px;
+  font-family: var(--font-jp); font-size: var(--body); font-weight: 500;
+  border-radius: var(--r-2);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: background var(--dur-micro) var(--ease),
+              color var(--dur-micro) var(--ease),
+              border-color var(--dur-micro) var(--ease),
+              box-shadow var(--dur-micro) var(--ease),
+              transform var(--dur-micro) var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn--primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn--primary:hover { background: var(--forest-ink); }
+
+.btn--forest, .btn--indigo {
+  background: var(--indigo);
+  color: var(--paper);
+}
+.btn--forest:hover, .btn--indigo:hover { background: var(--indigo-ink); color: var(--paper); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.btn--ghost:hover { background: var(--ink); color: var(--paper); }
+
+.btn--quiet {
+  background: transparent;
+  color: var(--ink-2);
+  border-color: var(--line);
+}
+.btn--quiet:hover { background: var(--paper-2); border-color: var(--ink-2); color: var(--ink); }
+
+.btn--sm { padding: 8px 14px; font-size: var(--small); }
+.btn--lg { padding: 16px 28px; font-size: var(--lead); }
+
+/* =========================================================
+   Tags / pills
+   ========================================================= */
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-jp);
+  font-size: var(--micro);
+  font-weight: 500;
+  border-radius: var(--r-full);
+  background: var(--paper-2);
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+  letter-spacing: 0.04em;
+}
+.tag--new      { background: var(--sunrise); color: var(--paper); border-color: transparent; }
+.tag--reuse    { background: var(--indigo); color: var(--paper); border-color: transparent; }
+.tag--reuse-soft { background: transparent; color: var(--indigo); border-color: var(--indigo); }
+.tag--new-soft { background: transparent; color: var(--sunrise-ink); border-color: var(--sunrise); }
+.tag--sand     { background: var(--sand); color: var(--ink-2); border-color: transparent; }
+
+/* =========================================================
+   Form inputs
+   ========================================================= */
+.input, .textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-jp);
+  font-size: var(--body);
+  color: var(--ink);
+  background: var(--cloud);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2);
+  transition: border-color var(--dur-micro) var(--ease),
+              box-shadow var(--dur-micro) var(--ease);
+}
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px rgba(31,61,107,0.14);
+}
+.textarea { min-height: 120px; resize: vertical; line-height: var(--lh-normal); }
+.label {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-size: var(--small); color: var(--ink-2); font-weight: 500;
+  margin-bottom: 6px;
+}
+.label-req { color: var(--terracotta-ink); font-size: var(--micro); font-weight: 500; }
+.label-opt { color: var(--mute); font-size: var(--micro); font-weight: 400; }
+
+/* =========================================================
+   Cards
+   ========================================================= */
+.card {
+  background: var(--cloud);
+  border: 1px solid var(--line);
+  border-radius: var(--r-3);
+  box-shadow: var(--shadow-1);
+  transition: box-shadow var(--dur-state) var(--ease),
+              border-color var(--dur-state) var(--ease);
+}
+.card:hover { box-shadow: var(--shadow-2); }
+.card--flat { box-shadow: none; }
+.card--feature { border-radius: var(--r-4); }
+
+/* =========================================================
+   Utility
+   ========================================================= */
+.stack > * + * { margin-top: var(--s-4); }
+.stack-sm > * + * { margin-top: var(--s-2); }
+.stack-lg > * + * { margin-top: var(--s-6); }
+.row { display: flex; gap: var(--s-4); align-items: center; }
+.col { display: flex; flex-direction: column; gap: var(--s-4); }
+.grid { display: grid; gap: var(--s-5); }

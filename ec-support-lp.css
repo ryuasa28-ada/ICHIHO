@@ -1,0 +1,86 @@
+/* =========================================================
+   EC販売支援事業 — LP専用スタイル (BtoB / 藍基調)
+   reuse-lp.css の lp-* クラスに追加して使用
+   ========================================================= */
+
+/* FV illustration */
+.ec-illus { width: 100%; height: auto; display: block; border-radius: var(--r-4); border: 1px solid var(--line); box-shadow: var(--shadow-1); background: var(--paper-2); }
+.ec-fv__cta { display: flex; flex-direction: column; gap: 12px; }
+.ec-fv__cta .btn { min-height: 52px; font-size: 16px; }
+@media (min-width: 560px) { .ec-fv__cta { flex-direction: row; flex-wrap: wrap; } .ec-fv__cta .btn { flex: 0 1 auto; } }
+
+/* Worries checklist (8) */
+.ec-checks { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 640px) { .ec-checks { grid-template-columns: 1fr 1fr; } }
+.ec-check { display: flex; gap: 14px; align-items: flex-start; background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3); padding: 20px 22px; }
+.ec-check__ic { width: 26px; height: 26px; border-radius: var(--r-full); flex-shrink: 0; display: grid; place-items: center; background: color-mix(in oklab, var(--indigo) 12%, var(--paper)); color: var(--indigo); }
+.ec-check__ic svg { width: 15px; height: 15px; }
+.ec-check__t { margin: 0; font-size: 15px; color: var(--ink-2); line-height: 1.7; }
+.ec-lead { max-width: 720px; margin: 32px auto 0; text-align: center; color: var(--mute); font-size: 15px; }
+
+/* Services (5) */
+.ec-services { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 640px) { .ec-services { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1020px) { .ec-services { grid-template-columns: repeat(3, 1fr); } }
+.ec-service { background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3); padding: 30px 28px; display: flex; flex-direction: column; gap: 14px; transition: box-shadow var(--dur-state) var(--ease), transform var(--dur-state) var(--ease); }
+.ec-service:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.ec-service__ic { width: 52px; height: 52px; border-radius: var(--r-2); display: grid; place-items: center; background: color-mix(in oklab, var(--indigo) 9%, var(--paper)); color: var(--indigo); }
+.ec-service__ic svg { width: 26px; height: 26px; }
+.ec-service__no { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.14em; color: var(--sky); font-weight: 600; }
+.ec-service__t { margin: 0; font-size: 18px; font-weight: 500; color: var(--ink); }
+.ec-service__d { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.85; }
+
+/* Target businesses (6) */
+.ec-targets { display: grid; grid-template-columns: 1fr; gap: 12px; max-width: 900px; margin: 0 auto; }
+@media (min-width: 720px) { .ec-targets { grid-template-columns: 1fr 1fr; } }
+.ec-target { display: flex; gap: 14px; align-items: center; background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-2); padding: 18px 22px; }
+.ec-target__ic { color: var(--indigo); flex-shrink: 0; display: grid; place-items: center; }
+.ec-target__ic svg { width: 22px; height: 22px; }
+.ec-target__t { margin: 0; font-size: 15px; color: var(--ink); font-weight: 500; }
+
+/* Channels (4) */
+.ec-channels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (min-width: 900px) { .ec-channels { grid-template-columns: repeat(4, 1fr); } }
+.ec-channel { background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3); padding: 30px 22px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.ec-channel__ic { width: 52px; height: 52px; border-radius: var(--r-full); display: grid; place-items: center; background: color-mix(in oklab, var(--indigo) 10%, var(--paper)); color: var(--indigo); }
+.ec-channel__ic svg { width: 26px; height: 26px; }
+.ec-channel__t { font-size: 16px; font-weight: 500; color: var(--ink); }
+.ec-note { max-width: 820px; margin: 26px auto 0; display: flex; gap: 12px; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-2); padding: 18px 22px; color: var(--ink-2); font-size: 14px; line-height: 1.8; }
+.ec-note__ic { color: var(--sky); flex-shrink: 0; margin-top: 1px; }
+.ec-note__ic svg { width: 20px; height: 20px; }
+
+/* Performance-fee feature + criteria */
+.ec-perf { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: start; }
+@media (min-width: 900px) { .ec-perf { grid-template-columns: 1fr 1fr; gap: 56px; } }
+.ec-perf__lead { margin: 0 0 18px; color: rgba(244,246,249,0.9); font-size: 16px; line-height: 1.95; }
+.ec-perf__pt { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; color: var(--paper); font-size: 15px; line-height: 1.8; }
+.ec-perf__pt-ic { color: var(--sky); flex-shrink: 0; margin-top: 2px; }
+.ec-perf__pt-ic svg { width: 18px; height: 18px; }
+.ec-perf__card { background: rgba(244,246,249,0.06); border: 1px solid rgba(244,246,249,0.16); border-radius: var(--r-3); padding: 30px; }
+.ec-perf__card-h { font-size: 13px; letter-spacing: 0.04em; color: var(--sky); font-weight: 600; margin: 0 0 18px; }
+.ec-criteria { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ec-criterion { display: flex; gap: 10px; align-items: center; color: rgba(244,246,249,0.9); font-size: 14px; }
+.ec-criterion__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sky); flex-shrink: 0; }
+
+/* Fit products (7) */
+.ec-fit { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 640px) { .ec-fit { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .ec-fit { grid-template-columns: repeat(3, 1fr); } }
+.ec-fit__card { display: flex; gap: 14px; align-items: center; background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3); padding: 22px 24px; }
+.ec-fit__ic { width: 40px; height: 40px; border-radius: var(--r-2); flex-shrink: 0; display: grid; place-items: center; background: color-mix(in oklab, var(--sunrise) 12%, var(--paper)); color: var(--sunrise-ink); }
+.ec-fit__ic svg { width: 20px; height: 20px; }
+.ec-fit__t { margin: 0; font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.6; }
+
+/* Flow 6 steps */
+.ec-flow { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 640px) { .ec-flow { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .ec-flow { grid-template-columns: repeat(3, 1fr); } }
+
+/* Paper-fill CTA button for indigo bands */
+.btn--paper { background: var(--paper); color: var(--indigo-ink); border-color: var(--paper); }
+.btn--paper:hover { background: #fff; color: var(--indigo-ink); }
+
+/* Single-button FAB (BtoB, controlled) */
+.lp-fab--single { grid-template-columns: 1fr; }
+.lp-fab--single .lp-fab__btn { flex-direction: row; gap: 8px; font-size: 15px; min-height: 58px; }
+.lp-fab--single .lp-fab__btn svg { width: 20px; height: 20px; }

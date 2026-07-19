@@ -1,0 +1,331 @@
+/* =========================================================
+   リユース事業 / ecoサイクル — LP専用スタイル
+   colors_and_type.css + pages.css のトークンに重ねて使用
+   ========================================================= */
+
+/* Header CTA (PC only — shared.jsx headerCta) */
+.site-header__tel { display: inline-flex; align-items: center; gap: 8px; color: var(--indigo); }
+.site-header__tel:hover { color: var(--indigo-ink); }
+.site-header__tel-txt { display: flex; flex-direction: column; line-height: 1.1; }
+.site-header__tel-num { font-family: var(--font-en); font-size: 17px; font-weight: 700; letter-spacing: 0.01em; }
+.site-header__tel-sub { font-size: 10px; color: var(--mute); font-weight: 500; letter-spacing: 0.02em; }
+.site-header__cta { align-items: center; gap: 16px; }
+
+/* Reserve room for the mobile floating CTA bar */
+.lp-body { padding-bottom: 76px; }
+@media (min-width: 880px) { .lp-body { padding-bottom: 0; } }
+
+/* =========================================================
+   CTA button family (LINE緑 / 電話藍 / メールオレンジ)
+   ========================================================= */
+.btn--line   { background: #06C755; color: #fff; border-color: #06C755; }
+.btn--line:hover { background: #05b34c; color: #fff; }
+.btn--call   { background: var(--indigo); color: var(--paper); border-color: var(--indigo); }
+.btn--call:hover { background: var(--indigo-ink); color: var(--paper); }
+.btn--mail   { background: transparent; color: var(--sunrise-ink); border-color: var(--sunrise); }
+.btn--mail:hover { background: var(--sunrise); color: var(--paper); }
+.btn--block  { justify-content: center; }
+.btn__ic { flex-shrink: 0; }
+
+/* =========================================================
+   First view
+   ========================================================= */
+.lp-fv { position: relative; overflow: hidden; padding: 40px 0 64px; background: var(--paper); }
+.lp-fv__pattern {
+  position: absolute; inset: 0;
+  background-image: url('assets/pattern-seigaiha.svg');
+  background-size: 150px 75px; background-repeat: repeat;
+  opacity: 0.05; pointer-events: none;
+  mask-image: linear-gradient(180deg, black 0, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, black 0, transparent 100%);
+}
+.lp-fv__crumb { position: relative; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--mute); margin-bottom: 28px; }
+.lp-fv__crumb a { color: var(--mute); }
+.lp-fv__crumb a:hover { color: var(--ink-2); }
+.lp-fv__inner { position: relative; display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+.lp-fv__head-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.lp-fv__no { font-family: var(--font-en); font-size: 13px; letter-spacing: 0.14em; color: var(--indigo); font-weight: 600; }
+.lp-fv__logo { height: 44px; width: auto; }
+.lp-fv__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.lp-fv__badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: color-mix(in oklab, var(--sunrise) 14%, var(--paper));
+  color: var(--sunrise-ink); border: 1px solid color-mix(in oklab, var(--sunrise) 32%, transparent);
+  border-radius: var(--r-full); padding: 6px 14px; font-size: 13px; font-weight: 600;
+}
+.lp-fv__title {
+  font-family: var(--font-serif); font-weight: 400;
+  font-size: clamp(32px, 5.4vw, 56px); line-height: 1.24; color: var(--ink);
+  margin: 0 0 22px; letter-spacing: 0.005em;
+}
+.lp-fv__title .accent { color: var(--sunrise-ink); }
+.lp-fv__lead { color: var(--ink-2); font-size: 16px; line-height: 1.9; max-width: 33em; margin: 0 0 30px; }
+.lp-fv__cta { display: flex; flex-direction: column; gap: 12px; }
+.lp-fv__cta .btn { min-height: 52px; font-size: 16px; }
+.lp-fv__visual { position: relative; }
+.lp-fv__illus {
+  width: 100%; border-radius: var(--r-4); border: 1px solid var(--line);
+  box-shadow: var(--shadow-1); display: block; background: var(--paper-2);
+}
+.lp-fv__facts {
+  margin-top: 16px; background: var(--cloud); border: 1px solid var(--line);
+  border-radius: var(--r-3); box-shadow: var(--shadow-1); padding: 8px 20px;
+}
+.lp-fv__fact { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.lp-fv__fact:last-child { border-bottom: 0; }
+.lp-fv__fact-k { font-size: 12px; color: var(--mute); font-weight: 500; }
+.lp-fv__fact-v { font-size: 14px; color: var(--ink); font-weight: 500; text-align: right; }
+@media (min-width: 560px) { .lp-fv__cta { flex-direction: row; flex-wrap: wrap; } .lp-fv__cta .btn { flex: 1 1 auto; } }
+@media (min-width: 900px) {
+  .lp-fv { padding: 52px 0 76px; }
+  .lp-fv__inner { grid-template-columns: 1.12fr 0.88fr; gap: 60px; }
+}
+
+/* =========================================================
+   Section shell (LP)
+   ========================================================= */
+.lp-sec { padding: 64px 0; }
+.lp-sec--alt { background: var(--paper-2); }
+.lp-sec--ink { background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
+.lp-sec--ink::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url('assets/pattern-seigaiha.svg'); background-size: 140px 70px;
+  opacity: 0.06; pointer-events: none;
+}
+.lp-sec--ink .container { position: relative; z-index: 1; }
+.lp-head { max-width: 760px; margin-bottom: 40px; }
+.lp-head--center { margin-left: auto; margin-right: auto; text-align: center; }
+.lp-head::before { content: ""; display: block; width: 44px; height: 3px; border-radius: 2px; background: var(--indigo); margin-bottom: 20px; }
+.lp-head--center::before { margin-left: auto; margin-right: auto; }
+.lp-head__anchor { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.16em; color: var(--indigo); font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 12px; }
+.lp-sec--ink .lp-head::before { background: var(--sky); }
+.lp-sec--ink .lp-head__anchor { color: var(--sky); }
+.lp-head__jp { font-family: var(--font-serif); font-weight: 500; font-size: clamp(26px, 3.6vw, 38px); line-height: 1.3; color: var(--ink); margin: 0 0 14px; }
+.lp-sec--ink .lp-head__jp { color: var(--paper); }
+.lp-head__sub { margin: 0; color: var(--ink-2); font-size: 16px; line-height: 1.8; }
+.lp-sec--ink .lp-head__sub { color: rgba(244,246,249,0.74); }
+
+/* =========================================================
+   Buy items grid (10 icon cards)
+   ========================================================= */
+.lp-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (min-width: 560px) { .lp-items { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 900px) { .lp-items { grid-template-columns: repeat(5, 1fr); } }
+.lp-item {
+  background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3);
+  padding: 22px 14px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center;
+  transition: box-shadow var(--dur-state) var(--ease), transform var(--dur-state) var(--ease), border-color var(--dur-state) var(--ease);
+}
+.lp-item:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); border-color: var(--sky); }
+.lp-item__ic {
+  width: 48px; height: 48px; border-radius: var(--r-full); display: grid; place-items: center;
+  background: color-mix(in oklab, var(--indigo) 8%, var(--paper)); color: var(--indigo);
+}
+.lp-item__ic svg { width: 24px; height: 24px; }
+.lp-item__t { font-size: 14px; font-weight: 500; color: var(--ink); }
+
+/* =========================================================
+   Recommend cards (4)
+   ========================================================= */
+.lp-rec { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 560px) { .lp-rec { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 980px) { .lp-rec { grid-template-columns: repeat(4, 1fr); } }
+.lp-rec__card {
+  background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3);
+  padding: 26px 24px; display: flex; flex-direction: column; gap: 14px;
+}
+.lp-rec__check {
+  width: 34px; height: 34px; border-radius: var(--r-full); flex-shrink: 0;
+  background: color-mix(in oklab, var(--tea) 16%, var(--paper)); color: var(--tea);
+  display: grid; place-items: center;
+}
+.lp-rec__t { margin: 0; font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.7; }
+
+/* =========================================================
+   Flow (STEP 01–05)
+   ========================================================= */
+.lp-flow { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 640px) { .lp-flow { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1040px) { .lp-flow { grid-template-columns: repeat(5, 1fr); } }
+.lp-flow__item {
+  background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3);
+  padding: 26px 22px; display: flex; flex-direction: column; gap: 10px; position: relative;
+}
+.lp-flow__no { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.12em; color: var(--indigo); font-weight: 700; }
+.lp-flow__num { font-family: var(--font-en); font-size: 30px; font-weight: 700; color: color-mix(in oklab, var(--indigo) 22%, var(--paper)); line-height: 1; }
+.lp-flow__t { margin: 4px 0 0; font-size: 16px; font-weight: 500; color: var(--ink); }
+.lp-flow__d { margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.8; }
+
+/* =========================================================
+   Reasons (5)
+   ========================================================= */
+.lp-reasons { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 640px) { .lp-reasons { grid-template-columns: 1fr 1fr; } }
+.lp-reason {
+  display: flex; gap: 18px; background: var(--cloud); border: 1px solid var(--line);
+  border-radius: var(--r-3); padding: 26px 26px;
+}
+.lp-reason__no {
+  font-family: var(--font-en); font-size: 15px; font-weight: 700; color: var(--paper);
+  background: var(--indigo); width: 34px; height: 34px; border-radius: var(--r-full);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.lp-reason__t { margin: 3px 0 8px; font-size: 17px; font-weight: 500; color: var(--ink); }
+.lp-reason__d { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.85; }
+
+/* =========================================================
+   Mid CTA banner + Closing CTA
+   ========================================================= */
+.lp-cta { background: var(--indigo); color: var(--paper); position: relative; overflow: hidden; }
+.lp-cta::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url('assets/pattern-seigaiha.svg'); background-size: 150px 75px;
+  opacity: 0.08; pointer-events: none;
+}
+.lp-cta__inner { position: relative; padding: 56px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.lp-cta__eyebrow { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.16em; color: var(--sky); font-weight: 600; }
+.lp-cta__head { font-family: var(--font-serif); font-weight: 400; font-size: clamp(26px, 3.6vw, 40px); line-height: 1.35; margin: 0; color: var(--paper); }
+.lp-cta__sub { margin: 4px 0 8px; color: rgba(244,246,249,0.82); font-size: 15px; line-height: 1.85; max-width: 44em; }
+.lp-cta__btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 440px; }
+.lp-cta__btns .btn { min-height: 54px; font-size: 16px; }
+.lp-cta .btn--call { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.55); color: var(--paper); }
+.lp-cta .btn--call:hover { background: rgba(255,255,255,0.20); color: var(--paper); }
+.lp-cta--closing .btn--mail { background: var(--paper); color: var(--sunrise-ink); border-color: var(--paper); }
+.lp-cta--closing .btn--mail:hover { background: var(--sunrise); color: var(--paper); border-color: var(--sunrise); }
+@media (min-width: 640px) { .lp-cta__btns { flex-direction: row; max-width: none; width: auto; } .lp-cta__btns .btn { flex: 0 1 auto; } }
+
+/* =========================================================
+   Reviews (4)
+   ========================================================= */
+.lp-reviews { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 640px) { .lp-reviews { grid-template-columns: 1fr 1fr; } }
+.lp-review {
+  background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3);
+  padding: 26px 26px; display: flex; flex-direction: column; gap: 14px;
+}
+.lp-review__stars { display: flex; gap: 3px; color: var(--sunrise); }
+.lp-review__stars svg { width: 16px; height: 16px; }
+.lp-review__body { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.9; }
+.lp-review__tag { font-size: 12px; color: var(--mute); font-weight: 500; }
+
+/* =========================================================
+   FAQ accordion (10)
+   ========================================================= */
+.lp-faq { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.lp-faq__item { background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3); overflow: hidden; }
+.lp-faq__q {
+  width: 100%; text-align: left; background: none; border: 0; cursor: pointer;
+  display: flex; align-items: center; gap: 14px; padding: 20px 22px;
+  font-family: var(--font-jp); font-size: 15px; font-weight: 500; color: var(--ink);
+}
+.lp-faq__qmark { font-family: var(--font-en); font-weight: 700; color: var(--indigo); flex-shrink: 0; }
+.lp-faq__qtxt { flex: 1; }
+.lp-faq__chev { flex-shrink: 0; color: var(--mute); transition: transform var(--dur-state) var(--ease); }
+.lp-faq__item.is-open .lp-faq__chev { transform: rotate(180deg); }
+.lp-faq__a { max-height: 0; overflow: hidden; transition: max-height var(--dur-state) var(--ease); }
+.lp-faq__item.is-open .lp-faq__a { max-height: 320px; }
+.lp-faq__a-inner { padding: 0 22px 22px 50px; color: var(--ink-2); font-size: 14px; line-height: 1.9; }
+
+/* =========================================================
+   Sell-tips banner (link to sell-tips.html)
+   ========================================================= */
+.lp-tips { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center;
+  background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-4); padding: 40px; box-shadow: var(--shadow-1); }
+.lp-tips__eyebrow { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.16em; color: var(--sunrise-ink); font-weight: 600; }
+.lp-tips__head { font-family: var(--font-serif); font-weight: 400; font-size: clamp(22px, 3vw, 30px); line-height: 1.4; color: var(--ink); margin: 10px 0 18px; }
+.lp-tips__points { display: flex; flex-direction: column; gap: 10px; margin: 0 0 24px; }
+.lp-tips__point { display: flex; gap: 12px; font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+.lp-tips__pno { font-family: var(--font-en); font-weight: 700; color: var(--sunrise-ink); flex-shrink: 0; }
+@media (min-width: 820px) { .lp-tips { grid-template-columns: 1.4fr auto; gap: 48px; } }
+
+/* =========================================================
+   Mobile floating CTA bar
+   ========================================================= */
+.lp-fab {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: var(--cloud); border-top: 1px solid var(--line);
+  box-shadow: 0 -6px 24px rgba(15,20,19,0.10);
+}
+.lp-fab__btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  padding: 9px 4px 10px; font-size: 11px; font-weight: 600; color: var(--paper);
+  min-height: 60px; text-align: center;
+}
+.lp-fab__btn svg { width: 20px; height: 20px; }
+.lp-fab__btn--line { background: #06C755; }
+.lp-fab__btn--call { background: var(--indigo); }
+.lp-fab__btn--mail { background: var(--sunrise); }
+@media (min-width: 880px) { .lp-fab { display: none; } }
+
+/* =========================================================
+   Mobile hardening
+   ========================================================= */
+@media (max-width: 640px) {
+  .lp-fv { padding: 24px 0 44px; }
+  .lp-fv__inner { gap: 30px; }
+  .lp-sec { padding: 46px 0; }
+  .lp-head { margin-bottom: 30px; }
+  .lp-tips { padding: 28px 24px; }
+  .lp-cta__inner { padding: 44px 0; }
+  .lp-cta__btns { width: 100%; }
+  .lp-cta__btns .btn { width: 100%; }
+  .lp-reason { padding: 22px 20px; gap: 14px; }
+  .lp-faq__q { padding: 17px 18px; font-size: 14px; }
+  .lp-faq__a-inner { padding: 0 18px 20px 44px; }
+}
+
+/* =========================================================
+   リユース事業 — 緑ベースの強調カラー（.page--reuse 限定）
+   循環・エコの世界観に合わせ、訴求ポイントを 茶畑グリーンで強調。
+   ヘッダー/フッター/構造の藍はそのまま維持。
+   ========================================================= */
+.page--reuse {
+  --emph: var(--tea);
+  --emph-ink: #3E5E34;
+  --emph-soft: color-mix(in oklab, var(--tea) 14%, var(--paper));
+  --emph-line: color-mix(in oklab, var(--tea) 34%, transparent);
+}
+
+/* FV — サービス名・無料バッジ・見出し強調を緑に */
+.page--reuse .lp-fv__no { color: var(--emph-ink); }
+.page--reuse .lp-fv__badge {
+  background: var(--emph-soft); color: var(--emph-ink);
+  border-color: var(--emph-line);
+}
+.page--reuse .lp-fv__title .accent { color: var(--emph-ink); }
+
+/* セクション見出しのルール線・アンカーを緑に */
+.page--reuse .lp-head::before { background: var(--emph); }
+.page--reuse .lp-head__anchor { color: var(--emph-ink); }
+
+/* 買取アイテムのアイコン */
+.page--reuse .lp-item__ic {
+  background: var(--emph-soft); color: var(--emph-ink);
+}
+.page--reuse .lp-item:hover { border-color: var(--emph); }
+
+/* 買取の流れ STEP 番号 */
+.page--reuse .lp-flow__no { color: var(--emph-ink); }
+.page--reuse .lp-flow__num { color: color-mix(in oklab, var(--tea) 34%, var(--paper)); }
+
+/* 選ばれる理由の番号バッジ */
+.page--reuse .lp-reason__no { background: var(--emph); }
+
+/* 中間CTAバンド — 強い訴求ゾーンを緑ベースに */
+.page--reuse .lp-cta:not(.lp-cta--closing) { background: var(--emph-ink); }
+.page--reuse .lp-cta:not(.lp-cta--closing) .lp-cta__eyebrow { color: color-mix(in oklab, var(--tea) 55%, white); }
+.page--reuse .lp-cta:not(.lp-cta--closing) .btn--call {
+  background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.55); color: var(--paper);
+}
+.page--reuse .lp-cta:not(.lp-cta--closing) .btn--call:hover { background: rgba(255,255,255,0.20); }
+
+/* クロージングCTA は藍を維持しつつ eyebrow を緑寄りに（統一感） */
+
+/* 高く売るコツ導線ボタン & ヘッダーCTA を緑に */
+.page--reuse .btn--indigo { background: var(--emph); border-color: var(--emph); color: var(--paper); }
+.page--reuse .btn--indigo:hover { background: var(--emph-ink); border-color: var(--emph-ink); color: var(--paper); }
+.page--reuse .lp-tips__eyebrow { color: var(--emph-ink); }
+.page--reuse .lp-tips__pno { color: var(--emph-ink); }
+.page--reuse .site-header__tel { color: var(--emph-ink); }
+.page--reuse .site-header__tel:hover { color: var(--emph); }

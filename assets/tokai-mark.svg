@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="東海オンラインショップ mark">
+  
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#1F3D6B" stroke-width="2.5"></circle>
+  
+  <circle cx="42" cy="20" r="3.2" fill="#D17A3F"></circle>
+  
+  <path d="M 12 42 L 23 24 L 27 28 L 30 26 L 34 32 L 39 26 L 52 42 Z" fill="#1F3D6B"></path>
+  
+  <path d="M 21 27 L 23 24 L 27 28 L 30 26 L 32 28 L 28 30 L 25 28 Z" fill="#FFFFFF"></path>
+  
+  <path d="M 8 48 Q 14 45 20 48 T 32 48 T 44 48 T 56 48" fill="none" stroke="#6B9BD1" stroke-width="2" stroke-linecap="round"></path>
+  <path d="M 8 53 Q 14 50 20 53 T 32 53 T 44 53 T 56 53" fill="none" stroke="#6B9BD1" stroke-width="2" stroke-linecap="round" opacity="0.55"></path>
+</svg>
