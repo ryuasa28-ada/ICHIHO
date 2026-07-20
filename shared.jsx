@@ -4,6 +4,7 @@ const { useState: useSharedState } = React;
 
 const HOME = "index.html";
 const CONTACT = "contact.html";
+const CONTACT_ECO = "contact.html?topic=sell";
 const BUSINESS_PAGES = [
   { key: "ec",      file: "business-ec.html",     jp: "EC販売事業",     en: "EC SALES" },
   { key: "reuse",   file: "business-reuse.html",   jp: "リユース事業",   en: "REUSE" },
@@ -112,6 +113,7 @@ function SiteFooter() {
 
 window.HOME = HOME;
 window.CONTACT = CONTACT;
+window.CONTACT_ECO = CONTACT_ECO;
 window.BUSINESS_PAGES = BUSINESS_PAGES;
 window.SiteHeader = SiteHeader;
 window.SiteFooter = SiteFooter;
