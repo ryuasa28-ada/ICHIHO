@@ -1,25 +1,54 @@
-/* global React, SiteHeader, SiteFooter, HOME */
+/* global React, SiteHeader, SiteFooter, HOME, CONTACT_ECO */
 const { useState: useContactState } = React;
 
-const TOPICS = [
-  ["stock", "法人・事業者様からの在庫相談"],
-  ["maker", "地域メーカー様のEC販売相談"],
-  ["sell",  "出品・卸・取引のご相談"],
-  ["other", "その他お問い合わせ"],
-];
+const VARIANTS = {
+  general: {
+    current: "contact",
+    crumb: "総合お問い合わせ",
+    title: "総合お問い合わせ",
+    lead: "事業全般・EC販売支援・商品掲載・お取引のご相談など、お気軽にお問い合わせください。担当スタッフが迅速に対応いたします。",
+    topics: [
+      ["stock", "法人・事業者様からの在庫相談"],
+      ["maker", "地域メーカー様のEC販売相談"],
+      ["sell",  "出品・卸・取引のご相談"],
+      ["other", "その他お問い合わせ"],
+    ],
+    defaultTopic: "stock",
+    crossLabel: "中古品の買取・出張査定はこちら",
+    crossHref: CONTACT_ECO,
+  },
+  eco: {
+    current: "contact-eco",
+    crumb: "ecoサイクル 買取のご相談",
+    title: "ecoサイクル 買取のご相談",
+    lead: "家電・ゲーム機・スマホ・パソコンなどの出張買取についてのご相談窓口です。出張費・査定・キャンセルはすべて無料。商品名・型番・状態・お写真を添えていただけるとスムーズです。",
+    topics: [
+      ["quote", "出張買取・無料査定のご依頼"],
+      ["item",  "買取可能か商品を相談したい"],
+      ["corp",  "法人・店舗の在庫買取"],
+      ["other", "その他ご相談"],
+    ],
+    defaultTopic: "quote",
+    crossLabel: "事業・EC販売支援のお問い合わせはこちら",
+    crossHref: "contact.html",
+  },
+};
 
 function ContactPage() {
+  const rootEl = document.getElementById("root");
+  const V = VARIANTS[rootEl && rootEl.dataset.variant === "eco" ? "eco" : "general"];
+  const TOPICS = V.topics;
   const params = new URLSearchParams(window.location.search);
-  const initial = TOPICS.some(t => t[0] === params.get("topic")) ? params.get("topic") : "stock";
+  const initial = TOPICS.some(t => t[0] === params.get("topic")) ? params.get("topic") : V.defaultTopic;
   const [submitted, setSubmitted] = useContactState(false);
   const [form, setForm] = useContactState({ company: "", name: "", phone: "", email: "", topic: initial, message: "" });
   const h = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
   const submit = (e) => { e.preventDefault(); setSubmitted(true); window.scrollTo({ top: 0, behavior: "smooth" }); };
-  const reset = () => { setSubmitted(false); setForm({ company: "", name: "", phone: "", email: "", topic: "stock", message: "" }); };
+  const reset = () => { setSubmitted(false); setForm({ company: "", name: "", phone: "", email: "", topic: V.defaultTopic, message: "" }); };
 
   return (
     <>
-      <SiteHeader current="contact" />
+      <SiteHeader current={V.current} />
       <main>
         <section className="cpage">
           <div className="cpage__pattern" aria-hidden="true"></div>
@@ -29,13 +58,13 @@ function ContactPage() {
               <div className="dhero__crumb">
                 <a href={HOME}>ホーム</a>
                 <span aria-hidden="true">/</span>
-                <span>お問い合わせ</span>
+                <span>{V.crumb}</span>
               </div>
               <div className="dhead__row" style={{ marginTop: "10px" }}>
                 <span className="dhead__num">CONTACT</span>
               </div>
-              <h1 className="cpage__title">お問い合わせ</h1>
-              <p className="lead cpage__lead">事業全般・EC販売支援・商品掲載・お取引のご相談など、お気軽にお問い合わせください。担当スタッフが迅速に対応いたします。</p>
+              <h1 className="cpage__title">{V.title}</h1>
+              <p className="lead cpage__lead">{V.lead}</p>
               <div className="cpage__direct">
                 <a className="cpage__direct-card cpage__direct-card--tel" href="tel:07092045260">
                   <span className="anchor">TEL</span>
@@ -48,6 +77,10 @@ function ContactPage() {
                   <span className="small cpage__direct-sub">古物商許可 取得済み</span>
                 </div>
               </div>
+              <a className="cpage__cross" href={V.crossHref}>
+                {V.crossLabel}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
             </aside>
 
             {/* Right — form card */}

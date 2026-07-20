@@ -7,6 +7,11 @@ const { useState, useEffect, useRef } = React;
 function Header({ onJump }) {
   const [open, setOpen] = useState(false);
   const [dd, setDd] = useState(false);
+  const [cdd, setCdd] = useState(false);
+  const CONTACTS = [
+    ["contact",     "contact.html",              "総合お問い合わせ", "事業全般・EC販売支援・取引", "ec"],
+    ["contact-eco", "contact-eco.html", "ecoサイクル買取相談", "出張買取・無料査定", "reuse"],
+  ];
   const BIZ = [
     ["ec",      "business-ec.html",     "EC販売事業",     "EC SALES"],
     ["reuse",   "business-reuse.html",   "リユース事業",   "REUSE"],
@@ -45,7 +50,23 @@ function Header({ onJump }) {
               ))}
             </div>
           </div>
-          <a href="contact.html">お問い合わせ</a>
+          <div className={`nav-dd nav-dd--right ${cdd ? "is-open" : ""}`}>
+            <button className="nav-dd__trigger" aria-haspopup="true" aria-expanded={cdd} onClick={() => setCdd(v => !v)}>
+              お問い合わせ
+              <svg className="nav-dd__chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div className="nav-dd__menu" role="menu">
+              {CONTACTS.map(([key, file, jp, note, dot]) => (
+                <a key={key} className="nav-dd__item" href={file} role="menuitem">
+                  <span className={`nav-dd__dot nav-dd__dot--${dot}`}></span>
+                  <span className="nav-dd__txt">
+                    <span className="nav-dd__txt-jp">{jp}</span>
+                    <span className="nav-dd__txt-en">{note}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
         </nav>
         <button
           className="site-header__burger"
@@ -63,6 +84,9 @@ function Header({ onJump }) {
           <a key={key} className="drawer-sub" href={file}>— {jp}</a>
         ))}
         <a href="contact.html">お問い合わせ</a>
+        {CONTACTS.map(([key, file, jp]) => (
+          <a key={key} className="drawer-sub" href={file}>— {jp}</a>
+        ))}
       </div>
     </header>);
 

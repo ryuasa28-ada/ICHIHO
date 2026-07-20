@@ -4,7 +4,11 @@ const { useState: useSharedState } = React;
 
 const HOME = "index.html";
 const CONTACT = "contact.html";
-const CONTACT_ECO = "contact.html?topic=sell";
+const CONTACT_ECO = "contact-eco.html";
+const CONTACT_PAGES = [
+  { key: "contact",     file: CONTACT,     jp: "総合お問い合わせ", en: "GENERAL",        note: "事業全般・EC販売支援・取引" },
+  { key: "contact-eco", file: CONTACT_ECO, jp: "ecoサイクル買取相談", en: "REUSE / ecoサイクル", note: "出張買取・無料査定" },
+];
 const BUSINESS_PAGES = [
   { key: "ec",      file: "business-ec.html",     jp: "EC販売事業",     en: "EC SALES" },
   { key: "reuse",   file: "business-reuse.html",   jp: "リユース事業",   en: "REUSE" },
@@ -14,6 +18,7 @@ const BUSINESS_PAGES = [
 function SiteHeader({ current, headerCta }) {
   const [open, setOpen] = useSharedState(false);
   const [dd, setDd] = useSharedState(false);
+  const [cdd, setCdd] = useSharedState(false);
   return (
     <header className="site-header">
       <div className="container site-header__inner">
@@ -47,7 +52,28 @@ function SiteHeader({ current, headerCta }) {
               ))}
             </div>
           </div>
-          <a className={current === "contact" ? "is-active" : ""} href={CONTACT}>お問い合わせ</a>
+          <div className={`nav-dd nav-dd--right ${cdd ? "is-open" : ""}`}>
+            <button
+              className={`nav-dd__trigger ${current && current.indexOf("contact") === 0 ? "is-active" : ""}`}
+              aria-haspopup="true"
+              aria-expanded={cdd}
+              onClick={() => setCdd(v => !v)}
+            >
+              お問い合わせ
+              <svg className="nav-dd__chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div className="nav-dd__menu" role="menu">
+              {CONTACT_PAGES.map(p => (
+                <a key={p.key} className={`nav-dd__item ${current === p.key ? "is-active" : ""}`} href={p.file} role="menuitem">
+                  <span className={`nav-dd__dot nav-dd__dot--${p.key === "contact-eco" ? "reuse" : "ec"}`}></span>
+                  <span className="nav-dd__txt">
+                    <span className="nav-dd__txt-jp">{p.jp}</span>
+                    <span className="nav-dd__txt-en">{p.note}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
         </nav>
         {headerCta && (
           <div className="site-header__cta">
@@ -72,6 +98,9 @@ function SiteHeader({ current, headerCta }) {
           <a key={p.key} className="drawer-sub" href={p.file}>— {p.jp}</a>
         ))}
         <a href={CONTACT}>お問い合わせ</a>
+        {CONTACT_PAGES.map(p => (
+          <a key={p.key} className="drawer-sub" href={p.file}>— {p.jp}</a>
+        ))}
       </div>
     </header>
   );
@@ -94,7 +123,8 @@ function SiteFooter() {
             <span className="anchor">SITE</span>
             {BUSINESS_PAGES.map(p => <a key={p.key} href={p.file}>{p.jp}</a>)}
             <a href={HOME + "#company"}>会社概要</a>
-            <a href={CONTACT}>お問い合わせ</a>
+            <a href={CONTACT}>総合お問い合わせ</a>
+            <a href={CONTACT_ECO}>ecoサイクル買取相談</a>
           </div>
           <div className="site-footer__col">
             <span className="anchor">LEGAL</span>
@@ -114,6 +144,7 @@ function SiteFooter() {
 window.HOME = HOME;
 window.CONTACT = CONTACT;
 window.CONTACT_ECO = CONTACT_ECO;
+window.CONTACT_PAGES = CONTACT_PAGES;
 window.BUSINESS_PAGES = BUSINESS_PAGES;
 window.SiteHeader = SiteHeader;
 window.SiteFooter = SiteFooter;
