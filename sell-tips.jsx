@@ -1,4 +1,4 @@
-/* global React, ReactDOM, SiteHeader, SiteFooter, HOME, CONTACT */
+/* global React, ReactDOM, SiteHeader, SiteFooter, HOME, CONTACT, CONTACT_ECO */
 /* 高く売るコツ — リユース事業のサブページ */
 const TEL2 = "070-9204-5260";
 const TELHREF2 = "tel:" + TEL2.replace(/-/g, "");
@@ -31,7 +31,7 @@ function CtaTrio2({ size = "" }) {
     <>
       <a href={LINE2} className={`btn btn--line btn--block ${size}`} target="_blank" rel="noreferrer"><span className="btn__ic">{chatIc}</span>LINEで無料査定する</a>
       <a href={TELHREF2} className={`btn btn--call btn--block ${size}`}><span className="btn__ic">{telIc2}</span>電話で相談する</a>
-      <a href={CONTACT} className={`btn btn--mail btn--block ${size}`}><span className="btn__ic">{mailIc2}</span>メールで問い合わせる</a>
+      <a href={CONTACT_ECO} className={`btn btn--mail btn--block ${size}`}><span className="btn__ic">{mailIc2}</span>メールで問い合わせる</a>
     </>
   );
 }
@@ -93,7 +93,7 @@ function SellTips() {
       <nav className="lp-fab" aria-label="お問い合わせ">
         <a href={LINE2} className="lp-fab__btn lp-fab__btn--line" target="_blank" rel="noreferrer">{chatIc}LINE査定</a>
         <a href={TELHREF2} className="lp-fab__btn lp-fab__btn--call">{telIc2}電話</a>
-        <a href={CONTACT} className="lp-fab__btn lp-fab__btn--mail">{mailIc2}メール</a>
+        <a href={CONTACT_ECO} className="lp-fab__btn lp-fab__btn--mail">{mailIc2}メール</a>
       </nav>
     </>
   );

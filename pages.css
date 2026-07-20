@@ -64,6 +64,8 @@ body { overflow-x: hidden; }
 .nav-dd:hover .nav-dd__menu, .nav-dd.is-open .nav-dd__menu {
   opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0);
 }
+.nav-dd--right .nav-dd__menu { left: auto; right: 0; transform: translateX(0) translateY(8px); }
+.nav-dd--right.is-open .nav-dd__menu, .nav-dd--right:hover .nav-dd__menu { transform: translateX(0) translateY(0); }
 .nav-dd__menu::before {
   content: ""; position: absolute; top: -16px; left: 0; right: 0; height: 16px;
 }
@@ -308,6 +310,10 @@ body { overflow-x: hidden; }
 .cpage__title { font-family: var(--font-serif); font-weight: 400; font-size: clamp(34px, 5vw, 52px); line-height: 1.2; color: var(--ink); margin: 14px 0 20px; }
 .cpage__lead { color: var(--ink-2); margin: 0 0 32px; max-width: 32em; }
 .cpage__direct { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.cpage__cross { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 14px; font-weight: 500; color: var(--indigo); }
+.cpage__cross:hover { color: var(--indigo-ink); }
+.cpage__cross svg { transition: transform var(--dur-micro) var(--ease); }
+.cpage__cross:hover svg { transform: translateX(3px); }
 .cpage__direct-card {
   display: flex; flex-direction: column; gap: 6px;
   background: var(--cloud); border: 1px solid var(--line); border-radius: var(--r-3);

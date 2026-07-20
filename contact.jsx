@@ -2,7 +2,6 @@
 const { useState: useContactState } = React;
 
 const TOPICS = [
-  ["buy",   "商品の買取について"],
   ["stock", "法人・事業者様からの在庫相談"],
   ["maker", "地域メーカー様のEC販売相談"],
   ["sell",  "出品・卸・取引のご相談"],
@@ -11,12 +10,12 @@ const TOPICS = [
 
 function ContactPage() {
   const params = new URLSearchParams(window.location.search);
-  const initial = TOPICS.some(t => t[0] === params.get("topic")) ? params.get("topic") : "buy";
+  const initial = TOPICS.some(t => t[0] === params.get("topic")) ? params.get("topic") : "stock";
   const [submitted, setSubmitted] = useContactState(false);
   const [form, setForm] = useContactState({ company: "", name: "", phone: "", email: "", topic: initial, message: "" });
   const h = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
   const submit = (e) => { e.preventDefault(); setSubmitted(true); window.scrollTo({ top: 0, behavior: "smooth" }); };
-  const reset = () => { setSubmitted(false); setForm({ company: "", name: "", phone: "", email: "", topic: "buy", message: "" }); };
+  const reset = () => { setSubmitted(false); setForm({ company: "", name: "", phone: "", email: "", topic: "stock", message: "" }); };
 
   return (
     <>
@@ -36,10 +35,7 @@ function ContactPage() {
                 <span className="dhead__num">CONTACT</span>
               </div>
               <h1 className="cpage__title">お問い合わせ</h1>
-              <p className="lead cpage__lead">
-                お取引・買取・EC販売支援・商品掲載のご相談など、
-                お気軽にお問い合わせください。担当スタッフが迅速に対応いたします。
-              </p>
+              <p className="lead cpage__lead">事業全般・EC販売支援・商品掲載・お取引のご相談など、お気軽にお問い合わせください。担当スタッフが迅速に対応いたします。</p>
               <div className="cpage__direct">
                 <a className="cpage__direct-card cpage__direct-card--tel" href="tel:07092045260">
                   <span className="anchor">TEL</span>

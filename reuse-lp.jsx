@@ -1,4 +1,4 @@
-/* global React, ReactDOM, SiteHeader, SiteFooter, HOME, CONTACT */
+/* global React, ReactDOM, SiteHeader, SiteFooter, HOME, CONTACT, CONTACT_ECO */
 /* リユース事業 / ecoサイクル — 集客LP。header/footer は shared.jsx から。 */
 const { useState: useLpState } = React;
 
@@ -87,7 +87,7 @@ function CtaTrio({ size = "", closing = false }) {
       <a href={TELHREF} className={`btn btn--call btn--block ${size}`}>
         <span className="btn__ic">{IC.telIc}</span>電話で相談する
       </a>
-      <a href={CONTACT} className={`btn btn--mail btn--block ${size}`}>
+      <a href={CONTACT_ECO} className={`btn btn--mail btn--block ${size}`}>
         <span className="btn__ic">{IC.mail}</span>メールで問い合わせる
       </a>
     </>
@@ -311,7 +311,7 @@ function ReuseLP() {
       <nav className="lp-fab" aria-label="お問い合わせ">
         <a href={LINE} className="lp-fab__btn lp-fab__btn--line" target="_blank" rel="noreferrer">{IC.chat}LINE査定</a>
         <a href={TELHREF} className="lp-fab__btn lp-fab__btn--call">{IC.telIc}電話</a>
-        <a href={CONTACT} className="lp-fab__btn lp-fab__btn--mail">{IC.mail}メール</a>
+        <a href={CONTACT_ECO} className="lp-fab__btn lp-fab__btn--mail">{IC.mail}メール</a>
       </nav>
     </>
   );

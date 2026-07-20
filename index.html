@@ -79,6 +79,8 @@ body { overflow-x: hidden; }
 .nav-dd:hover .nav-dd__menu, .nav-dd.is-open .nav-dd__menu {
   opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0);
 }
+.nav-dd--right .nav-dd__menu { left: auto; right: 0; transform: translateX(0) translateY(8px); }
+.nav-dd--right.is-open .nav-dd__menu, .nav-dd--right:hover .nav-dd__menu { transform: translateX(0) translateY(0); }
 .nav-dd__menu::before { content: ""; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
 .nav-dd__item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--r-2); transition: background var(--dur-micro) var(--ease); }
 .nav-dd__item:hover { background: var(--paper-2); }

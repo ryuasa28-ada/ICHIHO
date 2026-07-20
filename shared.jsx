@@ -24,7 +24,7 @@ function SiteHeader({ current, headerCta }) {
           <a href={HOME + "#company"}>会社概要</a>
           <div className={`nav-dd ${dd ? "is-open" : ""}`}>
             <button
-              className={`nav-dd__trigger ${current && current !== "contact" ? "is-active" : ""}`}
+              className={`nav-dd__trigger ${["ec","reuse","support"].includes(current) ? "is-active" : ""}`}
               aria-haspopup="true"
               aria-expanded={dd}
               onClick={() => setDd(v => !v)}
