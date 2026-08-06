@@ -1,10 +1,25 @@
 /* global React, ReactDOM, SiteHeader, SiteFooter, HOME, CONTACT, CONTACT_ECO */
-/* リユース事業 / ecoサイクル — 集客LP。header/footer は shared.jsx から。 */
-const { useState: useLpState } = React;
+/* リユース事業 / ecoサイクル — 集客ページ。header/footer は shared.jsx から。
+   スタイルは reuse-page.css（このページ専用）。文言は既存のものをそのまま使用。 */
+const { useState: useRpState, useEffect: useRpEffect, useRef: useRpRef } = React;
 
 const TEL = "070-9204-5260";
 const TELHREF = "tel:" + TEL.replace(/-/g, "");
 const LINE = "#"; /* TODO: LINE公式アカウントURLに差し替え */
+
+/* ---------------------------------------------------------
+   写真素材。差し替えはここだけ直せば全箇所に反映される。
+   実ファイルは assets/photos/（README に手順あり）。
+   --------------------------------------------------------- */
+const PHOTOS = {
+  /* ギャラリーの流れるサムネイル。枚数は自由に増減できる。 */
+  slides: [
+    { src: "assets/photos/slide-01.svg", alt: "出張買取の様子" },
+    { src: "assets/photos/slide-02.svg", alt: "家電・デジタル機器の査定" },
+    { src: "assets/photos/slide-03.svg", alt: "倉庫・在庫品の整理" },
+    { src: "assets/photos/slide-04.svg", alt: "スタッフの丁寧な対応" },
+  ],
+};
 
 /* ---- inline stroke icons (lucide-style, 24x24) ---- */
 const S = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round" };
@@ -29,9 +44,10 @@ const IC = {
   star: <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
   chev: <I d={<polyline points="6 9 12 15 18 9"/>} />,
   arrow: <I d={<><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>} />,
+  arrowL: <I d={<><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 5 5 12 12 19"/></>} />,
 };
 
-/* ---- content (添付テキストを忠実に使用) ---- */
+/* ---- content (既存テキストをそのまま使用) ---- */
 const ITEMS = [
   { t: "ゲーム機", ic: "gamepad" }, { t: "スマートフォン", ic: "phone" }, { t: "家電", ic: "appliance" },
   { t: "プリンター", ic: "printer" }, { t: "パソコン", ic: "laptop" }, { t: "レコーダー", ic: "recorder" },
@@ -77,156 +93,249 @@ const FAQ = [
   { q: "大型家電や重たい商品の買取はできますか？", a: "商品内容によって対応可否が異なります。大型冷蔵庫・洗濯機・大型家具など、搬出に人手が必要な商品は対応できない場合がございます。まずは商品名・型番・サイズ・お写真をお送りいただけますと、対応可能か確認いたします。" },
 ];
 
-/* ---- reusable CTA trio ---- */
-function CtaTrio({ size = "", closing = false }) {
+/* 英字ラベルは頭文字だけ赤、残りをブルーで表示する */
+function Anchor({ text }) {
+  return <span className="rp-head__anchor"><i>{text.charAt(0)}</i>{text.slice(1)}</span>;
+}
+
+/* ---- ラベル + 右端の丸い矢印ボタン ---- */
+function RpBtn({ href, variant, icon, children, size = "", target, rel, block = true }) {
   return (
-    <>
-      <a href={LINE} className={`btn btn--line btn--block ${size}`} target="_blank" rel="noreferrer">
-        <span className="btn__ic">{IC.chat}</span>LINEで無料査定する
-      </a>
-      <a href={TELHREF} className={`btn btn--call btn--block ${size}`}>
-        <span className="btn__ic">{IC.telIc}</span>電話で相談する
-      </a>
-      <a href={CONTACT_ECO} className={`btn btn--mail btn--block ${size}`}>
-        <span className="btn__ic">{IC.mail}</span>メールで問い合わせる
-      </a>
-    </>
+    <a
+      href={href}
+      className={`rp-btn rp-btn--${variant} ${block ? "rp-btn--block" : ""} ${size}`}
+      target={target}
+      rel={rel}>
+      {icon && <span className="rp-btn__ic">{icon}</span>}
+      <span className="rp-btn__label">{children}</span>
+      <span className="rp-btn__arrow" aria-hidden="true">{IC.arrow}</span>
+    </a>
   );
 }
 
-function Stars() {
-  return <div className="lp-review__stars">{[0,1,2,3,4].map(i => <React.Fragment key={i}>{IC.star}</React.Fragment>)}</div>;
-}
-
-function FaqItem({ item, i }) {
-  const [open, setOpen] = useLpState(i === 0);
+/* auto: 中身に応じた自動幅で横並び（ヒーロー用） */
+function CtaTrio({ size = "", onBlue = false, wide = false, auto = false }) {
+  const v = onBlue ? "onblue" : null;
+  const block = !auto;
   return (
-    <div className={`lp-faq__item ${open ? "is-open" : ""}`}>
-      <button className="lp-faq__q" aria-expanded={open} onClick={() => setOpen(v => !v)}>
-        <span className="lp-faq__qmark">Q</span>
-        <span className="lp-faq__qtxt">{item.q}</span>
-        <span className="lp-faq__chev">{IC.chev}</span>
-      </button>
-      <div className="lp-faq__a"><div className="lp-faq__a-inner">{item.a}</div></div>
+    <div className={`rp-cta-group ${wide ? "rp-cta-group--wide" : ""} ${auto ? "rp-cta-group--auto" : ""}`}>
+      <RpBtn href={LINE} variant={v || "red"} icon={IC.chat} size={size} block={block} target="_blank" rel="noreferrer">LINEで無料査定する</RpBtn>
+      <RpBtn href={TELHREF} variant={v || "blue"} icon={IC.telIc} size={size} block={block}>電話で相談する</RpBtn>
+      <RpBtn href={CONTACT_ECO} variant={v || "light"} icon={IC.mail} size={size} block={block}>メールで問い合わせる</RpBtn>
     </div>
   );
 }
 
-function ReuseLP() {
+function Stars() {
+  return <div className="rp-review__stars">{[0,1,2,3,4].map(i => <React.Fragment key={i}>{IC.star}</React.Fragment>)}</div>;
+}
+
+function FaqItem({ item, i }) {
+  const [open, setOpen] = useRpState(i === 0);
+  return (
+    <div className={`rp-faq__item ${open ? "is-open" : ""}`}>
+      <button className="rp-faq__q" aria-expanded={open} onClick={() => setOpen(v => !v)}>
+        <span className="rp-faq__qmark">Q</span>
+        <span className="rp-faq__qtxt">{item.q}</span>
+        <span className="rp-faq__chev">{IC.chev}</span>
+      </button>
+      <div className="rp-faq__a"><div className="rp-faq__a-inner"><span>{item.a}</span></div></div>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------
+   画像ギャラリー：サムネイルが途切れず一定速度で流れ続けるマーキー。
+   1セットを3回並べたトラックを2本置くことで、継ぎ目なくループする。
+   --------------------------------------------------------- */
+const GALLERY_REPEAT = 3;
+
+function PhotoMarquee({ photos }) {
+  const set = [];
+  for (let r = 0; r < GALLERY_REPEAT; r++) {
+    photos.forEach((p, i) => set.push({ ...p, key: `${r}-${i}` }));
+  }
+  const track = (hidden) => (
+    <div className="rp-gallery__track" aria-hidden={hidden || undefined}>
+      {set.map((p) => (
+        <figure key={p.key} className="rp-gallery__item">
+          <img src={p.src} alt={hidden ? "" : p.alt} loading="lazy" />
+        </figure>
+      ))}
+    </div>
+  );
+  return <div className="rp-gallery">{track(false)}{track(true)}</div>;
+}
+
+/* ---------------------------------------------------------
+   配色テーマの切替トグル。開発時のみレンダリングされる
+   （判定は business-reuse.html の先頭スクリプトで window.__RP_DEV__ に格納）。
+   --------------------------------------------------------- */
+const THEME_KEY = "rp-theme";
+
+function ThemeToggle() {
+  const [green, setGreen] = useRpState(
+    () => document.documentElement.getAttribute("data-theme") === "green"
+  );
+
+  const toggle = () => {
+    const next = !green;
+    if (next) document.documentElement.setAttribute("data-theme", "green");
+    else document.documentElement.removeAttribute("data-theme");
+    try { sessionStorage.setItem(THEME_KEY, next ? "green" : "default"); } catch (e) {}
+    setGreen(next);
+  };
+
+  return (
+    <button className="rp-themetoggle" onClick={toggle} aria-live="polite">
+      <span className="rp-themetoggle__dot" aria-hidden="true"></span>
+      {green ? "赤青バージョンに切り替え" : "緑バージョンに変更"}
+    </button>
+  );
+}
+
+function ReusePage() {
+  /* スクロールで画面内に入った要素をフェード + スライドイン */
+  useRpEffect(() => {
+    const els = Array.from(document.querySelectorAll(
+      ".rp-head, .rp-fv__copy, .rp-item, " +
+      ".rp-rec__card, .rp-flow__item, .rp-reason, .rp-review, .rp-faq__item, .rp-tips, .rp-cta__inner"
+    ));
+    const perParent = new Map();
+    els.forEach((el) => {
+      const k = perParent.get(el.parentElement) || 0;
+      perParent.set(el.parentElement, k + 1);
+      el.style.setProperty("--rp-delay", `${Math.min(k, 6) * 70}ms`);
+      el.setAttribute("data-rp-reveal", "");
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.setAttribute("data-rp-in", "");
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <>
       <SiteHeader current="reuse" headerCta={{ tel: TEL }} />
       <main>
-        {/* 3 · First view */}
-        <section className="lp-fv">
-          <div className="lp-fv__pattern" aria-hidden="true"></div>
+        {/* First view */}
+        <section className="rp-fv">
           <div className="container">
-            <div className="lp-fv__crumb">
+            <div className="rp-fv__crumb">
               <a href={HOME}>ホーム</a><span aria-hidden="true">/</span>
               <a href={HOME + "#business"}>事業内容</a><span aria-hidden="true">/</span>
               <span>リユース事業</span>
             </div>
-            <div className="lp-fv__inner">
-              <div className="lp-fv__copy">
-                <div className="lp-fv__head-row">
-                  <span className="lp-fv__no">REUSE · ecoサイクル</span>
-                  <img className="lp-fv__logo" src="assets/eco-cycle-logo.png" alt="ecoサイクル" />
+            <div className="rp-fv__inner">
+              <div className="rp-fv__copy">
+                <div className="rp-fv__head-row">
+                  <span className="rp-fv__no"><i>R</i>EUSE · ecoサイクル</span>
+                  <img className="rp-fv__logo" src="assets/eco-cycle-logo.png" alt="ecoサイクル" />
                 </div>
-                <div className="lp-fv__badges">
-                  <span className="lp-fv__badge">出張費無料</span>
-                  <span className="lp-fv__badge">査定無料</span>
-                  <span className="lp-fv__badge">キャンセル無料</span>
-                  <span className="lp-fv__badge">その場で現金買取</span>
+                <div className="rp-fv__badges">
+                  {["出張費無料", "査定無料", "キャンセル無料", "その場で現金買取"].map((b) => (
+                    <span key={b} className="rp-fv__badge">
+                      <span className="rp-fv__badge-ic" aria-hidden="true">{IC.check}</span>{b}
+                    </span>
+                  ))}
                 </div>
-                <h1 className="lp-fv__title">捨てる前に、<br /><span className="accent">まずは無料査定。</span></h1>
-                <p className="lp-fv__lead">静岡県内で、家電・ゲーム機・スマホ・おもちゃ・ホビー用品などの出張買取。出張費無料・査定無料・キャンセル無料。査定金額にご納得いただけましたら、その場で現金買取も可能です。</p>
-                <div className="lp-fv__cta"><CtaTrio /></div>
-              </div>
-              <div className="lp-fv__visual">
-                <img className="lp-fv__illus" src="assets/illustration-shizuoka.svg" alt="富士山と駿河湾" />
-                <div className="lp-fv__facts">
-                  <div className="lp-fv__fact"><span className="lp-fv__fact-k">サービス名</span><span className="lp-fv__fact-v">ecoサイクル</span></div>
-                  <div className="lp-fv__fact"><span className="lp-fv__fact-k">対応品目</span><span className="lp-fv__fact-v">家電・PC・スマホ・ホビー ほか</span></div>
-                  <div className="lp-fv__fact"><span className="lp-fv__fact-k">許可</span><span className="lp-fv__fact-v">古物商許可 取得済み</span></div>
-                  <div className="lp-fv__fact"><span className="lp-fv__fact-k">対象</span><span className="lp-fv__fact-v">個人・法人どちらも対応</span></div>
-                </div>
+                <span className="rp-fv__accent" aria-hidden="true">
+                  <span className="rp-fv__accent-line"></span>
+                  <span className="rp-fv__accent-arrow">{IC.arrow}</span>
+                </span>
+                <h1 className="rp-fv__title">捨てる前に、<br /><span className="rp-red">まずは無料査定。</span></h1>
+                <p className="rp-fv__lead">静岡県内で、家電・ゲーム機・スマホ・おもちゃ・ホビー用品などの出張買取。出張費無料・査定無料・キャンセル無料。査定金額にご納得いただけましたら、その場で現金買取も可能です。</p>
+                <CtaTrio auto />
               </div>
             </div>
           </div>
         </section>
 
-        {/* 4 · Buy items */}
-        <section className="lp-sec">
+        {/* Gallery — スライドショー + 写真グリッド */}
+        <section className="rp-sec rp-wave rp-wave--white">
           <div className="container">
-            <div className="lp-head lp-head--center">
-              <span className="lp-head__anchor">ITEMS</span>
-              <h2 className="lp-head__jp">買取対象アイテム</h2>
-              <p className="lp-head__sub">家電・デジタル機器からホビー用品まで、幅広く買取いたします。</p>
+            <div className="rp-head"><Anchor text="GALLERY" /></div>
+          </div>
+          <PhotoMarquee photos={PHOTOS.slides} />
+        </section>
+
+        {/* Buy items */}
+        <section className="rp-sec">
+          <div className="container">
+            <div className="rp-head">
+              <Anchor text="ITEMS" />
+              <h2 className="rp-head__jp"><span className="rp-red">買取</span>対象アイテム</h2>
+              <p className="rp-head__sub">家電・デジタル機器からホビー用品まで、幅広く買取いたします。</p>
             </div>
-            <div className="lp-items">
+            <div className="rp-items">
               {ITEMS.map((it, i) => (
-                <article key={i} className="lp-item">
-                  <span className="lp-item__ic">{IC[it.ic]}</span>
-                  <span className="lp-item__t">{it.t}</span>
+                <article key={i} className="rp-item">
+                  <span className="rp-item__ic">{IC[it.ic]}</span>
+                  <span className="rp-item__t">{it.t}</span>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 5 · Recommend */}
-        <section className="lp-sec lp-sec--alt">
+        {/* Recommended */}
+        <section className="rp-sec rp-sec--tint rp-wave rp-wave--tint">
           <div className="container">
-            <div className="lp-head lp-head--center">
-              <span className="lp-head__anchor">RECOMMENDED</span>
-              <h2 className="lp-head__jp">こんな方におすすめ</h2>
+            <div className="rp-head">
+              <Anchor text="RECOMMENDED" />
+              <h2 className="rp-head__jp">こんな方に<span className="rp-red">おすすめ</span></h2>
             </div>
-            <div className="lp-rec">
+            <div className="rp-rec">
               {REC.map((t, i) => (
-                <article key={i} className="lp-rec__card">
-                  <span className="lp-rec__check">{IC.check}</span>
-                  <p className="lp-rec__t">{t}</p>
+                <article key={i} className="rp-rec__card">
+                  <span className="rp-rec__check">{IC.check}</span>
+                  <p className="rp-rec__t">{t}</p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 6 · Flow */}
-        <section className="lp-sec">
+        {/* Flow */}
+        <section className="rp-sec rp-wave rp-wave--white">
           <div className="container">
-            <div className="lp-head lp-head--center">
-              <span className="lp-head__anchor">FLOW</span>
-              <h2 className="lp-head__jp">買取の流れ</h2>
-              <p className="lp-head__sub">LINE・電話・メールから、かんたんにご相談いただけます。</p>
+            <div className="rp-head">
+              <Anchor text="FLOW" />
+              <h2 className="rp-head__jp">買取の<span className="rp-red">流れ</span></h2>
+              <p className="rp-head__sub">LINE・電話・メールから、かんたんにご相談いただけます。</p>
             </div>
-            <ol className="lp-flow">
+            <ol className="rp-flow">
               {FLOW.map((s, i) => (
-                <li key={i} className="lp-flow__item">
-                  <span className="lp-flow__no">STEP</span>
-                  <span className="lp-flow__num">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="lp-flow__t">{s.t}</h3>
-                  <p className="lp-flow__d">{s.d}</p>
+                <li key={i} className="rp-flow__item">
+                  <span className="rp-flow__no">STEP</span>
+                  <span className="rp-flow__num">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className="rp-flow__t">{s.t}</h3>
+                  <p className="rp-flow__d">{s.d}</p>
                 </li>
               ))}
             </ol>
           </div>
         </section>
 
-        {/* 7 · Reasons */}
-        <section className="lp-sec lp-sec--alt">
+        {/* Reasons */}
+        <section className="rp-sec rp-sec--tint2 rp-wave rp-wave--tint2">
           <div className="container">
-            <div className="lp-head lp-head--center">
-              <span className="lp-head__anchor">WHY CHOOSE US</span>
-              <h2 className="lp-head__jp">選ばれる理由</h2>
+            <div className="rp-head">
+              <Anchor text="WHY CHOOSE US" />
+              <h2 className="rp-head__jp"><span className="rp-red">選ばれる</span>理由</h2>
             </div>
-            <div className="lp-reasons">
+            <div className="rp-reasons">
               {REASONS.map((r, i) => (
-                <article key={i} className="lp-reason">
-                  <span className="lp-reason__no">{String(i + 1).padStart(2, "0")}</span>
+                <article key={i} className="rp-reason">
+                  <span className="rp-reason__no">{String(i + 1).padStart(2, "0")}</span>
                   <div>
-                    <h3 className="lp-reason__t">{r.t}</h3>
-                    <p className="lp-reason__d">{r.d}</p>
+                    <h3 className="rp-reason__t">{r.t}</h3>
+                    <p className="rp-reason__d">{r.d}</p>
                   </div>
                 </article>
               ))}
@@ -234,87 +343,93 @@ function ReuseLP() {
           </div>
         </section>
 
-        {/* 8 · Mid CTA */}
-        <section className="lp-cta">
-          <div className="container lp-cta__inner">
-            <span className="lp-cta__eyebrow">FREE ASSESSMENT</span>
-            <h2 className="lp-cta__head">まずは無料査定から。</h2>
-            <p className="lp-cta__sub">出張費・査定費・キャンセルすべて無料。売れるか分からないお品物でも、まずはお気軽にご相談ください。</p>
-            <div className="lp-cta__btns"><CtaTrio /></div>
+        {/* Mid CTA */}
+        <section className="rp-sec rp-sec--blue rp-wave rp-wave--blue">
+          <div className="container">
+            <div className="rp-cta__inner">
+              <Anchor text="FREE ASSESSMENT" />
+              <h2 className="rp-cta__head">まずは無料査定から。</h2>
+              <p className="rp-cta__sub">出張費・査定費・キャンセルすべて無料。売れるか分からないお品物でも、まずはお気軽にご相談ください。</p>
+              <CtaTrio onBlue wide />
+            </div>
           </div>
         </section>
 
-        {/* 9 · Reviews */}
-        <section className="lp-sec">
+        {/* Reviews */}
+        <section className="rp-sec rp-wave rp-wave--white">
           <div className="container">
-            <div className="lp-head lp-head--center">
-              <span className="lp-head__anchor">REVIEWS</span>
-              <h2 className="lp-head__jp">お客様からの声</h2>
-              <p className="lp-head__sub">実際にご利用いただいたお客様からいただいた口コミです。</p>
+            <div className="rp-head">
+              <Anchor text="REVIEWS" />
+              <h2 className="rp-head__jp">お客様からの<span className="rp-red">声</span></h2>
+              <p className="rp-head__sub">実際にご利用いただいたお客様からいただいた口コミです。</p>
             </div>
-            <div className="lp-reviews">
+            <div className="rp-reviews">
               {REVIEWS.map((r, i) => (
-                <article key={i} className="lp-review">
+                <article key={i} className="rp-review">
                   <Stars />
-                  <p className="lp-review__body">{r.body}</p>
-                  <span className="lp-review__tag">{r.tag}</span>
+                  <p className="rp-review__body">{r.body}</p>
+                  <span className="rp-review__tag">{r.tag}</span>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 10 · FAQ */}
-        <section className="lp-sec lp-sec--alt">
+        {/* FAQ */}
+        <section className="rp-sec rp-sec--tint rp-wave rp-wave--tint">
           <div className="container">
-            <div className="lp-head lp-head--center">
-              <span className="lp-head__anchor">FAQ</span>
-              <h2 className="lp-head__jp">よくある質問</h2>
+            <div className="rp-head">
+              <Anchor text="FAQ" />
+              <h2 className="rp-head__jp">よくある<span className="rp-red">質問</span></h2>
             </div>
-            <div className="lp-faq">
+            <div className="rp-faq">
               {FAQ.map((item, i) => <FaqItem key={i} item={item} i={i} />)}
             </div>
           </div>
         </section>
 
-        {/* 11 · Sell-tips banner */}
-        <section className="lp-sec">
+        {/* Sell-tips banner */}
+        <section className="rp-sec rp-wave rp-wave--white">
           <div className="container">
-            <div className="lp-tips">
+            <div className="rp-tips">
               <div>
-                <span className="lp-tips__eyebrow">TIPS</span>
-                <h2 className="lp-tips__head">中古品を、少しでも高く売るコツ。</h2>
-                <div className="lp-tips__points">
-                  <p className="lp-tips__point"><span className="lp-tips__pno">POINT 1</span>季節商品や新商品は、売るタイミングが大切です。</p>
-                  <p className="lp-tips__point"><span className="lp-tips__pno">POINT 2</span>説明書・保証書・付属品は大切に保管しておきましょう。</p>
-                  <p className="lp-tips__point"><span className="lp-tips__pno">POINT 3</span>複数の商品をまとめて売ると査定額アップにつながります。</p>
+                <span className="rp-tips__eyebrow"><i>T</i>IPS</span>
+                <h2 className="rp-tips__head">中古品を、<span className="rp-red">少しでも高く売るコツ。</span></h2>
+                <div className="rp-tips__points">
+                  <p className="rp-tips__point"><span className="rp-tips__pno">POINT 1</span>季節商品や新商品は、売るタイミングが大切です。</p>
+                  <p className="rp-tips__point"><span className="rp-tips__pno">POINT 2</span>説明書・保証書・付属品は大切に保管しておきましょう。</p>
+                  <p className="rp-tips__point"><span className="rp-tips__pno">POINT 3</span>複数の商品をまとめて売ると査定額アップにつながります。</p>
                 </div>
               </div>
-              <a href="sell-tips.html" className="btn btn--indigo btn--lg btn--block">高く売るコツを見る<span className="btn__ic" style={{ marginLeft: 4 }}>{IC.arrow}</span></a>
+              <RpBtn href="sell-tips.html" variant="solid" size="rp-btn--lg">高く売るコツを見る</RpBtn>
             </div>
           </div>
         </section>
 
-        {/* 12 · Closing CTA */}
-        <section className="lp-cta lp-cta--closing">
-          <div className="container lp-cta__inner">
-            <span className="lp-cta__eyebrow">CONTACT</span>
-            <h2 className="lp-cta__head">お問い合わせ</h2>
-            <p className="lp-cta__sub">無料査定・出張買取のご相談は、LINE・電話・メールよりお気軽にお問い合わせください。</p>
-            <div className="lp-cta__btns"><CtaTrio size="btn--lg" closing /></div>
+        {/* Closing CTA */}
+        <section className="rp-sec rp-sec--ink rp-wave rp-wave--ink">
+          <div className="container">
+            <div className="rp-cta__inner">
+              <Anchor text="CONTACT" />
+              <h2 className="rp-cta__head">お問い合わせ</h2>
+              <p className="rp-cta__sub">無料査定・出張買取のご相談は、LINE・電話・メールよりお気軽にお問い合わせください。</p>
+              <CtaTrio size="rp-btn--lg" wide />
+            </div>
           </div>
         </section>
       </main>
       <SiteFooter />
 
       {/* SP floating CTA bar */}
-      <nav className="lp-fab" aria-label="お問い合わせ">
-        <a href={LINE} className="lp-fab__btn lp-fab__btn--line" target="_blank" rel="noreferrer">{IC.chat}LINE査定</a>
-        <a href={TELHREF} className="lp-fab__btn lp-fab__btn--call">{IC.telIc}電話</a>
-        <a href={CONTACT_ECO} className="lp-fab__btn lp-fab__btn--mail">{IC.mail}メール</a>
+      <nav className="rp-fab" aria-label="お問い合わせ">
+        <a href={LINE} className="rp-fab__btn rp-fab__btn--line" target="_blank" rel="noreferrer">{IC.chat}LINE査定</a>
+        <a href={TELHREF} className="rp-fab__btn rp-fab__btn--call">{IC.telIc}電話</a>
+        <a href={CONTACT_ECO} className="rp-fab__btn rp-fab__btn--mail">{IC.mail}メール</a>
       </nav>
+
+      {window.__RP_DEV__ && <ThemeToggle />}
     </>
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<ReuseLP />);
+ReactDOM.createRoot(document.getElementById("root")).render(<ReusePage />);

@@ -5,11 +5,36 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>リユース事業 / ecoサイクル｜出張買取・無料査定 | 株式会社ICHIHO</title>
 <meta name="description" content="静岡県内で家電・ゲーム機・スマホ・パソコン・ホビー用品などの出張買取。出張費無料・査定無料・キャンセル無料。その場で現金買取も可能です。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap">
 <link rel="stylesheet" href="colors_and_type.css">
 <link rel="stylesheet" href="pages.css">
-<link rel="stylesheet" href="reuse-lp.css">
+<link rel="stylesheet" href="reuse-page.css">
+<script>
+/* テーマ切替ボタンの表示判定と、保存済みテーマの先行適用。
+
+   RP_FORCE_DEV_TOOLS = true の間は、本番ホスト（GitHub Pages）でも
+   切替ボタンが表示される。先方に赤青版と緑版を見比べていただくための
+   一時的な措置。★配色が決まったら false に戻し、不採用テーマと
+   このスクリプト・ThemeToggle をまとめて削除すること。 */
+(function () {
+  var RP_FORCE_DEV_TOOLS = true;
+  var h = location.hostname;
+  window.__RP_DEV__ = RP_FORCE_DEV_TOOLS ||
+    location.protocol === "file:" ||
+    h === "localhost" || h === "127.0.0.1" || h === "[::1]" || /\.local$/.test(h);
+  if (!window.__RP_DEV__) return;
+  try {
+    /* リロード後もテーマを維持する。描画前に当てるのでチラつかない。 */
+    if (sessionStorage.getItem("rp-theme") === "green") {
+      document.documentElement.setAttribute("data-theme", "green");
+    }
+  } catch (e) {}
+})();
+</script>
 </head>
-<body class="page--reuse lp-body">
+<body class="page--reuse rp-body">
 <div id="root" data-screen-label="リユース事業"></div>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>

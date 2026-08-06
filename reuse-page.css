@@ -1,0 +1,586 @@
+/* =========================================================
+   リユース事業 / ecoサイクル — ページ専用スタイル
+   ---------------------------------------------------------
+   business-reuse.html からのみ読み込まれる。他ページが共有する
+   reuse-lp.css / pages.css は変更していないため、ここでの
+   トークン定義・上書きはこのページ限定で閉じている。
+
+   配色はすべて下のカラートークン経由。`<html data-theme="green">` を
+   付けるとテーマが緑バージョンに切り替わる（レイアウトは不変）。
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   theme-default — レッド + ブルー
+   --------------------------------------------------------- */
+:root {
+  --color-primary:        #0071BC;   /* 構造色：リンク・アンカー・主要ボタン */
+  --color-primary-deep:   #005791;
+  --color-accent:         #EE1C25;   /* 差し色：キーワード・チェック・頭文字 */
+  --color-accent-deep:    #C8121A;
+  --color-ink:            #142B3A;
+  --color-ink-deep:       #0C1E2A;
+  --color-ink-2:          #3D5568;
+  --color-mute:           #6C8194;
+  --color-line:           #DCE6F0;
+  --color-bg:             #FFFFFF;
+  --color-bg-2:           #F4F7FB;
+  --color-bg-3:           #E9EFF8;
+  --color-on-dark-anchor: #BEE0F5;   /* 濃色地の上のアンカー */
+  --color-on-dark-accent: #FFD2D4;
+  --color-footer-anchor:  #7FC2E8;
+
+  /* rgba() 用（影・半透明） */
+  --rgb-primary: 0, 113, 188;
+  --rgb-accent:  238, 28, 37;
+  --rgb-ink:     20, 43, 58;
+
+  /* テーマに依存しない色 */
+  --color-star:       #F5B301;
+  --color-line-brand: #06C755;
+}
+
+/* ---------------------------------------------------------
+   theme-green — 深緑 + 黄緑（変数名は default と同一）
+   --------------------------------------------------------- */
+[data-theme="green"] {
+  --color-primary:        #0B5D3B;
+  --color-primary-deep:   #07452B;
+  --color-accent:         #6FA31C;
+  --color-accent-deep:    #557D13;
+  --color-ink:            #13281E;
+  --color-ink-deep:       #0A1A12;
+  --color-ink-2:          #3A5245;
+  --color-mute:           #6D8377;
+  --color-line:           #DBE9DE;
+  --color-bg:             #FFFFFF;
+  --color-bg-2:           #F4FAF5;
+  --color-bg-3:           #E6F2E8;
+  --color-on-dark-anchor: #BFE6CB;
+  --color-on-dark-accent: #DCF0A8;
+  --color-footer-anchor:  #8FD3A3;
+
+  --rgb-primary: 11, 93, 59;
+  --rgb-accent:  111, 163, 28;
+  --rgb-ink:     19, 40, 30;
+}
+
+/* ---------------------------------------------------------
+   内部エイリアス（各コンポーネントはこちらを参照）
+   --------------------------------------------------------- */
+:root {
+  --rp-red:      var(--color-accent);
+  --rp-red-deep: var(--color-accent-deep);
+  --rp-blue:     var(--color-primary);
+  --rp-blue-deep:var(--color-primary-deep);
+  --rp-ink:      var(--color-ink);
+  --rp-ink-2:    var(--color-ink-2);
+  --rp-mute:     var(--color-mute);
+  --rp-line:     var(--color-line);
+  --rp-bg:       var(--color-bg);
+  --rp-bg-2:     var(--color-bg-2);
+  --rp-bg-3:     var(--color-bg-3);
+
+  --rp-round:    "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  --rp-ease:     cubic-bezier(.16, .84, .44, 1);
+  --rp-wave:     72px;
+}
+
+/* ---------------------------------------------------------
+   Base
+   --------------------------------------------------------- */
+.rp-body {
+  font-family: var(--rp-round);
+  color: var(--rp-ink);
+  background: var(--rp-bg);
+  overflow-x: hidden;
+}
+/* 基底の色は :where() で詳細度を 0 に抑え、各コンポーネント側の指定を優先させる
+   （共有フッターのリンク色などを塗り潰さないため） */
+.rp-body :where(h1, h2, h3, .h1, .h2, .h3) {
+  font-family: var(--rp-round);
+  font-weight: 800;
+  color: var(--rp-ink);
+  letter-spacing: 0.01em;
+}
+.rp-body :where(p) { color: var(--rp-ink-2); }
+.rp-body :where(a) { color: var(--rp-blue); }
+.rp-body :where(a:hover) { color: var(--rp-blue-deep); }
+.rp-red { color: var(--rp-red); }
+
+/* 共有ヘッダー／フッターの見た目をこのページのトーンに合わせる */
+.rp-body .site-header { background: rgba(255, 255, 255, 0.92); border-bottom: 1px solid var(--rp-line); }
+.rp-body .site-header__logo,
+.rp-body .site-header__logo-mark,
+.rp-body .site-header__logo-name { color: var(--rp-ink); font-family: var(--rp-round); }
+.rp-body .site-header__nav > a,
+.rp-body .nav-dd__trigger { font-family: var(--rp-round); color: var(--rp-ink-2); font-weight: 500; }
+.rp-body .site-header__nav > a:hover,
+.rp-body .nav-dd__trigger:hover { color: var(--rp-blue); }
+.rp-body .site-header__nav > a::after,
+.rp-body .nav-dd__trigger::after { background: var(--rp-red); }
+.rp-body .nav-dd__dot--ec { background: var(--rp-blue); }
+.rp-body .nav-dd__dot--reuse { background: var(--rp-red); }
+.rp-body .nav-dd__dot--support { background: var(--rp-ink); }
+.rp-body .site-header__tel {
+  display: inline-flex; align-items: center; gap: 9px;
+  color: var(--rp-ink); white-space: nowrap;
+}
+.rp-body .site-header__tel-txt { display: flex; flex-direction: column; gap: 1px; line-height: 1.2; }
+.rp-body .site-header__tel-num { font-family: var(--rp-round); font-size: 19px; font-weight: 800; letter-spacing: 0.01em; }
+.rp-body .site-header__tel-sub { font-size: 10px; color: var(--rp-mute); }
+.rp-body .site-header__cta .btn--indigo { background: var(--rp-blue); color: #fff; border-radius: 999px; font-family: var(--rp-round); font-weight: 700; }
+.rp-body .site-header__cta .btn--indigo:hover { background: var(--rp-blue-deep); color: #fff; }
+.rp-body .site-footer { background: var(--rp-ink); }
+.rp-body .site-footer__col .anchor { color: var(--color-footer-anchor); }
+
+/* ---------------------------------------------------------
+   Section shell + 波型の区切り
+   --------------------------------------------------------- */
+.rp-sec { position: relative; padding: 96px 0 104px; background: var(--rp-bg); }
+.rp-sec > .container { position: relative; z-index: 1; }
+.rp-sec--tint { background: var(--rp-bg-2); }
+.rp-sec--tint2 { background: var(--rp-bg-3); }
+.rp-sec--blue { background: var(--rp-blue); }
+
+/* 上端の波：そのセクション自身の色で前のセクションへ食い込ませる。
+   形はマスク、色は background-color で持たせているのでテーマに追従する。 */
+.rp-wave::before {
+  content: ""; position: absolute; z-index: 0; pointer-events: none;
+  left: 0; right: 0; top: calc(var(--rp-wave) * -1 + 1px); height: var(--rp-wave);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center bottom; mask-position: center bottom;
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-image: var(--wave-shape); mask-image: var(--wave-shape);
+}
+.rp-wave--white::before {
+  background-color: var(--color-bg);
+  --wave-shape: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 72' preserveAspectRatio='none'><path d='M0,72 L0,34 C250,2 470,66 720,42 C970,18 1200,60 1440,26 L1440,72 Z' fill='%23000'/></svg>");
+}
+.rp-wave--tint::before {
+  background-color: var(--color-bg-2);
+  --wave-shape: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 72' preserveAspectRatio='none'><path d='M0,72 L0,30 C260,64 480,6 730,26 C980,46 1210,68 1440,36 L1440,72 Z' fill='%23000'/></svg>");
+}
+.rp-wave--tint2::before {
+  background-color: var(--color-bg-3);
+  --wave-shape: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 72' preserveAspectRatio='none'><path d='M0,72 L0,36 C230,4 480,66 720,40 C960,14 1210,58 1440,28 L1440,72 Z' fill='%23000'/></svg>");
+}
+.rp-wave--blue::before {
+  background-color: var(--color-primary);
+  --wave-shape: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 72' preserveAspectRatio='none'><path d='M0,72 L0,32 C240,66 490,4 740,28 C990,52 1200,64 1440,30 L1440,72 Z' fill='%23000'/></svg>");
+}
+.rp-sec--ink { background: var(--rp-ink); }
+.rp-wave--ink::before {
+  background-color: var(--color-ink);
+  --wave-shape: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 72' preserveAspectRatio='none'><path d='M0,72 L0,34 C230,4 480,66 720,40 C960,14 1210,58 1440,28 L1440,72 Z' fill='%23000'/></svg>");
+}
+.rp-sec--ink .rp-head__jp, .rp-sec--ink .rp-cta__head { color: #fff; }
+.rp-sec--ink .rp-head__anchor { color: var(--color-on-dark-anchor); }
+.rp-sec--ink .rp-head__anchor i { color: var(--color-on-dark-accent); }
+
+/* ---------------------------------------------------------
+   Section head — 頭文字だけ赤、残りをブルー
+   --------------------------------------------------------- */
+.rp-head { max-width: 760px; margin: 0 auto 52px; text-align: center; }
+.rp-head--left { margin-inline: 0; text-align: left; }
+.rp-head__anchor {
+  display: inline-block;
+  font-family: Inter, var(--rp-round), sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.22em;
+  color: var(--rp-blue); margin-bottom: 14px;
+}
+.rp-head__anchor i { font-style: normal; color: var(--rp-red); }
+.rp-head__jp {
+  font-size: clamp(26px, 3.6vw, 40px); line-height: 1.42; margin: 0 0 16px;
+}
+.rp-head__sub { font-size: 15px; line-height: 1.95; margin: 0; color: var(--rp-ink-2); }
+.rp-sec--blue .rp-head__jp, .rp-sec--blue .rp-head__sub { color: #fff; }
+.rp-sec--blue .rp-head__anchor { color: var(--color-on-dark-anchor); }
+.rp-sec--blue .rp-head__anchor i { color: var(--color-on-dark-accent); }
+
+/* ---------------------------------------------------------
+   Buttons — ラベル + 右端に丸い矢印
+   --------------------------------------------------------- */
+.rp-btn {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 15px 14px 15px 26px;
+  border-radius: 999px;
+  font-family: var(--rp-round); font-size: 16px; font-weight: 700;
+  border: 2px solid transparent;
+  transition: background var(--dur-micro) var(--rp-ease),
+              color var(--dur-micro) var(--rp-ease),
+              border-color var(--dur-micro) var(--rp-ease),
+              transform var(--dur-state) var(--rp-ease),
+              box-shadow var(--dur-state) var(--rp-ease);
+}
+.rp-btn__ic { width: 21px; height: 21px; flex-shrink: 0; }
+.rp-btn__ic svg { width: 100%; height: 100%; }
+.rp-btn__label { flex: 1; text-align: left; }
+.rp-btn__arrow {
+  width: 34px; height: 34px; border-radius: 999px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: transform var(--dur-state) var(--rp-ease), background var(--dur-micro) var(--rp-ease);
+}
+.rp-btn__arrow svg { width: 16px; height: 16px; }
+.rp-btn:hover { transform: translateY(-2px); }
+.rp-btn:hover .rp-btn__arrow { transform: translateX(4px); }
+.rp-btn:active { transform: translateY(0); }
+.rp-btn--block { display: flex; width: 100%; }
+.rp-btn--lg { padding: 18px 16px 18px 30px; font-size: 17px; }
+
+/* 白背景 + 紺のアイコン円 */
+.rp-body .rp-btn--light {
+  background: #fff; color: var(--rp-ink); border-color: var(--rp-line);
+  box-shadow: 0 6px 18px rgba(var(--rgb-ink), 0.07);
+}
+.rp-body .rp-btn--light:hover { border-color: var(--rp-blue); color: var(--rp-blue); box-shadow: 0 12px 28px rgba(var(--rgb-primary), 0.16); }
+.rp-body .rp-btn--light .rp-btn__arrow { background: var(--rp-ink); color: #fff; }
+.rp-body .rp-btn--light:hover .rp-btn__arrow { background: var(--rp-blue); }
+
+/* 紺背景 + 白の矢印円 */
+.rp-body .rp-btn--solid { background: var(--rp-ink); color: #fff; box-shadow: 0 8px 22px rgba(var(--rgb-ink), 0.22); }
+.rp-body .rp-btn--solid:hover { background: var(--color-ink-deep); color: #fff; box-shadow: 0 14px 32px rgba(var(--rgb-ink), 0.3); }
+.rp-body .rp-btn--solid .rp-btn__arrow { background: rgba(255, 255, 255, 0.16); color: #fff; }
+
+.rp-body .rp-btn--red { background: var(--rp-red); color: #fff; box-shadow: 0 8px 22px rgba(var(--rgb-accent), 0.26); }
+.rp-body .rp-btn--red:hover { background: var(--rp-red-deep); color: #fff; box-shadow: 0 14px 32px rgba(var(--rgb-accent), 0.32); }
+.rp-body .rp-btn--red .rp-btn__arrow { background: rgba(255, 255, 255, 0.2); color: #fff; }
+
+.rp-body .rp-btn--blue { background: var(--rp-blue); color: #fff; box-shadow: 0 8px 22px rgba(var(--rgb-primary), 0.26); }
+.rp-body .rp-btn--blue:hover { background: var(--rp-blue-deep); color: #fff; box-shadow: 0 14px 32px rgba(var(--rgb-primary), 0.32); }
+.rp-body .rp-btn--blue .rp-btn__arrow { background: rgba(255, 255, 255, 0.2); color: #fff; }
+
+.rp-body .rp-btn--onblue { background: #fff; color: var(--rp-blue); }
+.rp-body .rp-btn--onblue:hover { background: #fff; color: var(--rp-blue-deep); box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18); }
+.rp-body .rp-btn--onblue .rp-btn__arrow { background: var(--rp-blue); color: #fff; }
+
+.rp-btn__label { line-height: 1.5; }
+/* 3カラムに並べるのは十分な横幅があるときだけ。狭い列では縦積みにして、
+   ラベルが折り返して丸ボタンのように潰れるのを防ぐ。 */
+.rp-cta-group { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 900px) {
+  .rp-cta-group--wide { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 560px) and (max-width: 899px) {
+  .rp-cta-group--wide { grid-template-columns: repeat(2, 1fr); }
+}
+/* 中身に応じた自動幅で横並び（引き伸ばさない） */
+.rp-cta-group--auto {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 14px; grid-template-columns: none;
+}
+.rp-cta-group--auto .rp-btn { width: auto; flex: 0 0 auto; }
+.rp-cta-group--auto .rp-btn__label { flex: 0 0 auto; }
+
+/* ---------------------------------------------------------
+   First view
+   --------------------------------------------------------- */
+.rp-fv {
+  position: relative; overflow: hidden;
+  padding: 44px 0 116px;
+  background: linear-gradient(170deg, #FFFFFF 0%, var(--rp-bg-2) 52%, var(--rp-bg-3) 100%);
+}
+.rp-fv__crumb { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--rp-mute); margin-bottom: 30px; }
+.rp-fv__crumb a { color: var(--rp-mute); }
+.rp-fv__crumb a:hover { color: var(--rp-blue); }
+/* 右カラムを廃したぶん、コピー全体を中央に据えて余白を対称に保つ */
+.rp-fv__inner { max-width: 900px; margin: 0 auto; }
+.rp-fv__copy { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.rp-fv__head-row { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; }
+.rp-fv__no {
+  font-family: Inter, var(--rp-round), sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: var(--rp-blue);
+}
+.rp-fv__no i { font-style: normal; color: var(--rp-red); }
+.rp-fv__logo { height: 46px; width: auto; }
+.rp-fv__badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 38px; }
+.rp-fv__badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 17px 9px 13px; border-radius: 999px;
+  background: #fff; border: 2px solid var(--rp-line);
+  font-size: 13px; font-weight: 700; color: var(--rp-ink);
+  box-shadow: 0 4px 12px rgba(var(--rgb-ink), 0.05);
+}
+.rp-fv__badge-ic {
+  width: 19px; height: 19px; border-radius: 999px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--rp-red); color: #fff;
+}
+.rp-fv__badge-ic svg { width: 12px; height: 12px; stroke-width: 2.6; }
+
+/* 見出し前の装飾：短い赤い線 + 矢印 */
+.rp-fv__accent { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 26px; }
+.rp-fv__accent-line { width: 52px; height: 3px; border-radius: 999px; background: var(--rp-red); }
+.rp-fv__accent-arrow { width: 18px; height: 18px; color: var(--rp-red); display: inline-flex; }
+.rp-fv__accent-arrow svg { width: 100%; height: 100%; stroke-width: 2.4; }
+
+.rp-fv__title {
+  font-size: clamp(32px, 5.4vw, 58px); line-height: 1.36; margin: 0 0 30px;
+}
+.rp-fv__lead { font-size: 16px; line-height: 2.05; margin: 0 0 44px; max-width: 36em; }
+@media (min-width: 940px) {
+  .rp-fv { padding: 52px 0 136px; }
+}
+
+/* ---------------------------------------------------------
+   画像ギャラリー — サムネイルが途切れず流れ続けるマーキー
+   --------------------------------------------------------- */
+.rp-gallery {
+  position: relative; z-index: 1;
+  display: flex; overflow: hidden;
+  /* セクション幅いっぱいに流す */
+  width: 100%;
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.rp-gallery__track {
+  display: flex; flex-shrink: 0; align-items: center;
+  gap: 20px; padding-right: 20px;
+  animation: rpGallery 52s linear infinite;
+  will-change: transform;
+}
+@keyframes rpGallery { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+.rp-gallery:hover .rp-gallery__track { animation-play-state: paused; }
+.rp-gallery__item {
+  flex-shrink: 0; margin: 0;
+  width: 320px; border-radius: 18px; overflow: hidden;
+  background: var(--rp-bg-3);
+  box-shadow: 0 12px 30px rgba(var(--rgb-ink), 0.12);
+}
+.rp-gallery__item img {
+  width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;
+}
+@media (max-width: 768px) {
+  .rp-gallery__track { gap: 14px; padding-right: 14px; animation-duration: 38s; }
+  .rp-gallery__item { width: 220px; border-radius: 14px; }
+}
+
+/* ---------------------------------------------------------
+   Items
+   --------------------------------------------------------- */
+.rp-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (min-width: 640px) { .rp-items { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 980px) { .rp-items { grid-template-columns: repeat(5, 1fr); } }
+.rp-item {
+  background: #fff; border: 2px solid var(--rp-line); border-radius: 20px;
+  padding: 26px 14px 22px;
+  display: flex; flex-direction: column; align-items: center; gap: 13px;
+  transition: transform var(--dur-state) var(--rp-ease), border-color var(--dur-micro) var(--rp-ease), box-shadow var(--dur-state) var(--rp-ease);
+}
+.rp-item:hover { transform: translateY(-4px); border-color: var(--rp-blue); box-shadow: 0 14px 30px rgba(var(--rgb-primary), 0.14); }
+.rp-item__ic {
+  width: 54px; height: 54px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--rp-bg-3); color: var(--rp-blue);
+  transition: background var(--dur-micro) var(--rp-ease), color var(--dur-micro) var(--rp-ease);
+}
+.rp-item__ic svg { width: 26px; height: 26px; }
+.rp-item:hover .rp-item__ic { background: var(--rp-blue); color: #fff; }
+.rp-item__t { font-size: 14px; font-weight: 700; color: var(--rp-ink); text-align: center; }
+
+/* ---------------------------------------------------------
+   Recommended
+   --------------------------------------------------------- */
+.rp-rec { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 720px) { .rp-rec { grid-template-columns: repeat(2, 1fr); } }
+.rp-rec__card {
+  display: flex; align-items: center; gap: 16px;
+  background: #fff; border-radius: 18px; padding: 22px 24px;
+  box-shadow: 0 8px 22px rgba(var(--rgb-ink), 0.07);
+}
+.rp-rec__check {
+  width: 34px; height: 34px; border-radius: 999px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--rp-red); color: #fff;
+}
+.rp-rec__check svg { width: 18px; height: 18px; }
+.rp-rec__t { margin: 0; font-size: 15px; font-weight: 700; color: var(--rp-ink); line-height: 1.7; }
+
+/* ---------------------------------------------------------
+   Flow
+   --------------------------------------------------------- */
+.rp-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 720px) { .rp-flow { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .rp-flow { grid-template-columns: repeat(5, 1fr); gap: 14px; } }
+.rp-flow__item {
+  background: #fff; border-radius: 20px; padding: 26px 22px 24px;
+  border: 2px solid var(--rp-line);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.rp-flow__no { font-family: Inter, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--rp-mute); }
+.rp-flow__num {
+  font-family: Inter, sans-serif; font-size: 32px; font-weight: 800;
+  line-height: 1; color: var(--rp-red);
+}
+.rp-flow__t { margin: 4px 0 0; font-size: 17px; }
+.rp-flow__d { margin: 0; font-size: 14px; line-height: 1.9; }
+
+/* ---------------------------------------------------------
+   Reasons
+   --------------------------------------------------------- */
+.rp-reasons { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 860px) { .rp-reasons { grid-template-columns: repeat(2, 1fr); } }
+.rp-reason {
+  display: flex; gap: 20px; align-items: flex-start;
+  background: #fff; border-radius: 22px; padding: 28px 26px;
+  box-shadow: 0 10px 26px rgba(var(--rgb-ink), 0.07);
+}
+.rp-reason__no {
+  font-family: Inter, sans-serif; font-size: 15px; font-weight: 800;
+  color: #fff; background: var(--rp-blue);
+  width: 44px; height: 44px; border-radius: 999px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.rp-reason__t { margin: 6px 0 8px; font-size: 18px; }
+.rp-reason__d { margin: 0; font-size: 14.5px; line-height: 1.95; }
+
+/* ---------------------------------------------------------
+   CTA band
+   --------------------------------------------------------- */
+.rp-cta__inner { text-align: center; max-width: 1000px; margin: 0 auto; }
+.rp-cta__inner .rp-btn { padding-left: 20px; gap: 10px; }
+.rp-cta__inner .rp-btn--lg { padding-left: 22px; }
+.rp-cta__head { font-size: clamp(26px, 3.6vw, 40px); margin: 0 0 14px; color: #fff; }
+.rp-cta__sub { color: rgba(255, 255, 255, 0.88); font-size: 15px; line-height: 1.95; margin: 0 0 30px; }
+.rp-sec--blue .rp-cta__sub { color: rgba(255, 255, 255, 0.88); }
+
+/* ---------------------------------------------------------
+   Reviews
+   --------------------------------------------------------- */
+.rp-reviews { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 860px) { .rp-reviews { grid-template-columns: repeat(2, 1fr); } }
+.rp-review {
+  background: #fff; border-radius: 22px; padding: 28px 26px;
+  border: 2px solid var(--rp-line);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.rp-review__stars { display: flex; gap: 3px; color: var(--color-star); }
+.rp-review__stars svg { width: 19px; height: 19px; }
+.rp-review__body { margin: 0; font-size: 14.5px; line-height: 1.95; flex: 1; }
+.rp-review__tag {
+  align-self: flex-start;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--rp-bg-3); color: var(--rp-blue);
+  font-size: 12px; font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   FAQ
+   --------------------------------------------------------- */
+.rp-faq { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.rp-faq__item { background: #fff; border: 2px solid var(--rp-line); border-radius: 18px; overflow: hidden; transition: border-color var(--dur-micro) var(--rp-ease); }
+.rp-faq__item.is-open { border-color: var(--rp-blue); }
+.rp-faq__q {
+  width: 100%; display: flex; align-items: center; gap: 14px;
+  padding: 20px 22px; text-align: left;
+  font-family: var(--rp-round); font-size: 15.5px; font-weight: 700; color: var(--rp-ink);
+}
+.rp-faq__qmark {
+  width: 30px; height: 30px; border-radius: 999px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--rp-red); color: #fff;
+  font-family: Inter, sans-serif; font-size: 14px; font-weight: 800;
+}
+.rp-faq__qtxt { flex: 1; line-height: 1.6; }
+.rp-faq__chev { color: var(--rp-mute); flex-shrink: 0; transition: transform var(--dur-state) var(--rp-ease); }
+.rp-faq__chev svg { width: 20px; height: 20px; }
+.rp-faq__item.is-open .rp-faq__chev { transform: rotate(180deg); color: var(--rp-blue); }
+.rp-faq__a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 300ms var(--rp-ease); }
+.rp-faq__item.is-open .rp-faq__a { grid-template-rows: 1fr; }
+.rp-faq__a-inner { overflow: hidden; }
+.rp-faq__a-inner > span {
+  display: block; padding: 0 22px 22px 66px;
+  font-size: 14.5px; line-height: 1.95; color: var(--rp-ink-2);
+}
+
+/* ---------------------------------------------------------
+   Tips banner
+   --------------------------------------------------------- */
+.rp-tips {
+  background: #fff; border-radius: 26px; padding: 40px 36px;
+  display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center;
+  box-shadow: 0 16px 40px rgba(var(--rgb-ink), 0.1);
+  border: 2px solid var(--rp-line);
+}
+@media (min-width: 900px) { .rp-tips { grid-template-columns: 1.6fr auto; gap: 44px; } }
+.rp-tips__eyebrow { font-family: Inter, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; color: var(--rp-blue); }
+.rp-tips__eyebrow i { font-style: normal; color: var(--rp-red); }
+.rp-tips__head { font-size: clamp(21px, 2.6vw, 29px); margin: 12px 0 22px; line-height: 1.5; }
+.rp-tips__points { display: flex; flex-direction: column; gap: 12px; }
+.rp-tips__point { margin: 0; display: flex; flex-direction: column; gap: 4px; font-size: 14.5px; line-height: 1.8; }
+.rp-tips__pno { font-family: Inter, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.16em; color: var(--rp-red); }
+
+/* ---------------------------------------------------------
+   SP floating CTA
+   --------------------------------------------------------- */
+.rp-fab {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--rp-line);
+  box-shadow: 0 -6px 20px rgba(var(--rgb-ink), 0.14);
+}
+.rp-body .rp-fab__btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  padding: 11px 4px; background: #fff;
+  font-family: var(--rp-round); font-size: 11px; font-weight: 700; color: var(--rp-ink);
+}
+.rp-body .rp-fab__btn svg { width: 21px; height: 21px; }
+.rp-body .rp-fab__btn--line { color: var(--color-line-brand); }
+.rp-body .rp-fab__btn--call { color: var(--rp-blue); }
+.rp-body .rp-fab__btn--mail { color: var(--rp-red); }
+@media (min-width: 900px) { .rp-fab { display: none; } }
+@media (max-width: 899px) { .rp-body { padding-bottom: 68px; } }
+
+/* ---------------------------------------------------------
+   テーマ切替トグル（開発時のみ DOM に出力される）
+   --------------------------------------------------------- */
+.rp-themetoggle {
+  position: fixed; right: 20px; bottom: 20px; z-index: 90;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 11px 18px; border-radius: 999px;
+  background: var(--color-ink); color: #fff;
+  font-family: var(--rp-round); font-size: 13px; font-weight: 700;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 28px rgba(var(--rgb-ink), 0.34);
+  cursor: pointer;
+  transition: transform var(--dur-state) var(--rp-ease), background var(--dur-micro) var(--rp-ease);
+}
+.rp-themetoggle:hover { transform: translateY(-2px); background: var(--color-ink-deep); }
+.rp-themetoggle__dot {
+  width: 13px; height: 13px; border-radius: 999px; flex-shrink: 0;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(var(--rgb-accent), 0.28);
+}
+@media (max-width: 899px) {
+  .rp-themetoggle { bottom: 82px; right: 12px; padding: 9px 14px; font-size: 12px; }
+}
+
+/* ---------------------------------------------------------
+   スクロール連動アニメーション
+   --------------------------------------------------------- */
+[data-rp-reveal] {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 720ms var(--rp-ease), transform 720ms var(--rp-ease);
+  transition-delay: var(--rp-delay, 0ms);
+}
+/* 表示済みの印は data 属性で持つ。class に入れると、React が className を
+   書き直すコンポーネント（FAQ の開閉など）で消えて要素ごと不可視になるため。 */
+[data-rp-reveal][data-rp-in] { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-rp-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .rp-gallery__track { animation: none; }
+  .rp-btn:hover, .rp-item:hover { transform: none; }
+}
+
+/* ---------------------------------------------------------
+   Responsive
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root { --rp-wave: 42px; }
+  .rp-sec { padding: 64px 0 72px; }
+  .rp-head { margin-bottom: 36px; }
+  .rp-fv { padding: 30px 0 76px; }
+  .rp-tips { padding: 30px 24px; border-radius: 20px; }
+  .rp-reason { padding: 24px 20px; gap: 16px; }
+  .rp-faq__a-inner > span { padding-left: 22px; }
+}
