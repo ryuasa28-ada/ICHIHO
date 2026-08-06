@@ -23,8 +23,10 @@ function SiteHeader({ current, headerCta }) {
     <header className="site-header">
       <div className="container site-header__inner">
         <a href={HOME} className="site-header__logo">
-          <img src="assets/tokai-mark.svg" alt="" width="32" height="32" />
-          <span>株式会社ICHIHO</span>
+          <span className="site-header__logo-txt">
+            <span className="site-header__logo-mark">ICHIHO</span>
+            <span className="site-header__logo-name">株式会社ICHIHO</span>
+          </span>
         </a>
         <nav className="site-header__nav">
           <a href={HOME + "#company"}>会社概要</a>

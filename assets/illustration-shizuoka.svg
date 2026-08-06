@@ -1,16 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Shizuoka skyline">
-  
-  <rect width="400" height="200" fill="#E9EDF3"></rect>
-  
-  <path d="M 60 160 L 160 60 L 180 80 L 200 70 L 220 90 L 240 75 L 340 160 Z" fill="#1F3D6B" opacity="0.9"></path>
-  
-  <path d="M 145 80 L 160 60 L 180 80 L 200 70 L 215 85 L 195 95 L 175 88 L 160 80 Z" fill="#FFFFFF"></path>
-  
-  <circle cx="290" cy="55" r="14" fill="#D17A3F" opacity="0.85"></circle>
-  
-  <g stroke="#6B9BD1" stroke-width="1.5" fill="none" stroke-linecap="round">
-    <path d="M 0 170 Q 25 165 50 170 T 100 170 T 150 170 T 200 170 T 250 170 T 300 170 T 350 170 T 400 170"></path>
-    <path d="M 0 180 Q 25 175 50 180 T 100 180 T 150 180 T 200 180 T 250 180 T 300 180 T 350 180 T 400 180" opacity="0.6"></path>
-    <path d="M 0 190 Q 25 185 50 190 T 100 190 T 150 190 T 200 190 T 250 190 T 300 190 T 350 190 T 400 190" opacity="0.35"></path>
-  </g>
+
+  <rect width="400" height="200" fill="#EAF3FB"></rect>
+
+  <circle cx="312" cy="52" r="18" fill="#BFE0F0"></circle>
+
+  <path d="M 0 152 L 62 108 L 112 142 L 160 112 L 226 152 Z" fill="#C3DCF2"></path>
+
+  <path d="M 92 152 L 185 56 L 204 75 L 218 69 L 232 82 L 326 152 Z" fill="#2C6EC6"></path>
+  <path d="M 92 152 L 185 56 L 203 152 Z" fill="#1A56B0"></path>
+  <path d="M 167 79 L 185 56 L 204 75 L 218 69 L 229 80 L 210 85 L 191 79 L 178 83 Z" fill="#FFFFFF"></path>
+
+  <path d="M 0 150 L 400 150 L 400 200 L 0 200 Z" fill="#A9D8EC"></path>
+  <path d="M 0 162 Q 25 155 50 162 T 100 162 T 150 162 T 200 162 T 250 162 T 300 162 T 350 162 T 400 162 L 400 200 L 0 200 Z" fill="#7FC3E4"></path>
+  <path d="M 0 176 Q 25 169 50 176 T 100 176 T 150 176 T 200 176 T 250 176 T 300 176 T 350 176 T 400 176 L 400 200 L 0 200 Z" fill="#579FD3"></path>
+  <path d="M 0 190 Q 25 184 50 190 T 100 190 T 150 190 T 200 190 T 250 190 T 300 190 T 350 190 T 400 190 L 400 200 L 0 200 Z" fill="#3A7CBC"></path>
 </svg>

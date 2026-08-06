@@ -31,13 +31,11 @@
    First view
    ========================================================= */
 .lp-fv { position: relative; overflow: hidden; padding: 40px 0 64px; background: var(--paper); }
+/* フラットな薄いブルーのグラデーション（装飾パターンは使わない） */
 .lp-fv__pattern {
   position: absolute; inset: 0;
-  background-image: url('assets/pattern-seigaiha.svg');
-  background-size: 150px 75px; background-repeat: repeat;
-  opacity: 0.05; pointer-events: none;
-  mask-image: linear-gradient(180deg, black 0, transparent 100%);
-  -webkit-mask-image: linear-gradient(180deg, black 0, transparent 100%);
+  background: linear-gradient(180deg, rgba(31, 61, 107, 0.05) 0%, rgba(31, 61, 107, 0) 100%);
+  pointer-events: none;
 }
 .lp-fv__crumb { position: relative; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--mute); margin-bottom: 28px; }
 .lp-fv__crumb a { color: var(--mute); }
@@ -89,8 +87,8 @@
 .lp-sec--ink { background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
 .lp-sec--ink::before {
   content: ""; position: absolute; inset: 0;
-  background-image: url('assets/pattern-seigaiha.svg'); background-size: 140px 70px;
-  opacity: 0.06; pointer-events: none;
+  background: linear-gradient(160deg, rgba(107, 155, 209, 0.16) 0%, rgba(107, 155, 209, 0) 62%);
+  pointer-events: none;
 }
 .lp-sec--ink .container { position: relative; z-index: 1; }
 .lp-head { max-width: 760px; margin-bottom: 40px; }
@@ -179,8 +177,8 @@
 .lp-cta { background: var(--indigo); color: var(--paper); position: relative; overflow: hidden; }
 .lp-cta::before {
   content: ""; position: absolute; inset: 0;
-  background-image: url('assets/pattern-seigaiha.svg'); background-size: 150px 75px;
-  opacity: 0.08; pointer-events: none;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 58%);
+  pointer-events: none;
 }
 .lp-cta__inner { position: relative; padding: 56px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .lp-cta__eyebrow { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.16em; color: var(--sky); font-weight: 600; }
