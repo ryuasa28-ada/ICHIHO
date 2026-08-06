@@ -33,13 +33,15 @@ function CompanySection() {
             </p>
             <div className="company__map" aria-hidden="true">
               <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
-                <rect width="320" height="200" fill="var(--paper-2)" />
-                <path d="M 0 90 Q 60 70 110 100 T 220 110 Q 270 115 320 90 L 320 200 L 0 200 Z" fill="var(--sky)" opacity="0.28" />
-                <path d="M 0 90 Q 60 70 110 100 T 220 110 Q 270 115 320 90" stroke="var(--indigo)" strokeWidth="1.2" fill="none" opacity="0.55" />
-                <path d="M 30 80 L 80 30 L 95 45 L 110 35 L 125 50 L 175 80 Z" fill="var(--indigo)" opacity="0.88" />
+                <rect width="320" height="200" fill="#EAF3FB" />
+                <path d="M 0 90 Q 60 70 110 100 T 220 110 Q 270 115 320 90 L 320 200 L 0 200 Z" fill="#A9D8EC" />
+                <path d="M 0 116 Q 70 100 140 126 T 250 132 Q 290 134 320 118 L 320 200 L 0 200 Z" fill="#7FC3E4" />
+                <path d="M 0 150 Q 80 138 160 156 T 320 152 L 320 200 L 0 200 Z" fill="#579FD3" />
+                <path d="M 30 92 L 80 30 L 95 45 L 110 35 L 125 50 L 175 92 Z" fill="#2C6EC6" />
+                <path d="M 30 92 L 80 30 L 95 45 L 101 41 L 101 92 Z" fill="#1A56B0" />
                 <path d="M 73 38 L 80 30 L 95 45 L 110 35 L 120 47 L 105 50 L 90 45 Z" fill="#fff" />
-                <circle cx="210" cy="105" r="6" fill="var(--sunrise)" />
-                <circle cx="210" cy="105" r="14" fill="none" stroke="var(--sunrise)" strokeWidth="1.2" opacity="0.5" />
+                <circle cx="210" cy="105" r="16" fill="#FFFFFF" opacity="0.65" />
+                <circle cx="210" cy="105" r="7" fill="var(--accent)" />
                 <text x="222" y="108" fontFamily="Inter" fontSize="10" letterSpacing="0.16em" fill="var(--ink)">SHIMIZU</text>
               </svg>
             </div>

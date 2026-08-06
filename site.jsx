@@ -26,8 +26,10 @@ function Header({ onJump }) {
     <header className="site-header">
       <div className="container site-header__inner">
         <a href="#top" className="site-header__logo" onClick={click("top")}>
-          <img src="assets/tokai-mark.svg" alt="" width="32" height="32" />
-          <span>株式会社ICHIHO</span>
+          <span className="site-header__logo-txt">
+            <span className="site-header__logo-mark">ICHIHO</span>
+            <span className="site-header__logo-name">株式会社ICHIHO</span>
+          </span>
         </a>
         <nav className="site-header__nav">
           <a href="#company" onClick={click("company")}>会社概要</a>
@@ -93,23 +95,76 @@ function Header({ onJump }) {
 }
 
 /* =========================================================
+   Flat-vector iconography (Bluedge-inspired: blue, single-weight)
+   ========================================================= */
+function ArrowRight() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12h13M12 5l7 7-7 7" />
+    </svg>);
+
+}
+
+/* ヒーロー全面に敷くフラットベクターの駿河湾。
+   空は CSS のグラデーションが担当し、SVG は幅いっぱい・下端基準で重ねる。
+   こうすると画面比が変わっても横方向がトリミングされない。 */
+/* 波は線ではなく「面」で描く。y を頂点とする緩やかな帯を下端まで塗りつぶす。 */
+function seaBand(y, amp) {
+  const seg = 200;
+  let d = `M0 ${y} Q${seg / 4} ${y - amp} ${seg / 2} ${y}`;
+  for (let x = seg; x <= 1600 + seg; x += seg / 2) d += ` T${x} ${y}`;
+  return `${d} L1600 900 L0 900 Z`;
+}
+
+function HeroBackdrop() {
+  return (
+    <svg className="hero__scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+      <circle cx="1236" cy="196" r="76" fill="#BFE0F0" />
+
+      {/* 遠景の山並み（中央クロップでも主役が欠けないよう内側に寄せる） */}
+      <path d="M0 660 L180 528 L330 604 L500 516 L700 660 Z" fill="#C3DCF2" />
+      <path d="M1220 660 L1344 562 L1424 606 L1520 566 L1600 660 Z" fill="#C3DCF2" />
+
+      {/* 富士山 — 稜線に沿って面を分けた陰影 + 白い雪冠 */}
+      <path d="M690 660 L952 344 L1004 406 L1042 386 L1082 430 L1345 660 Z" fill="#2C6EC6" />
+      <path d="M690 660 L952 344 L1000 660 Z" fill="#1A56B0" />
+      <path d="M900 420 L952 344 L1004 406 L1042 386 L1074 424 L1022 438 L968 420 L932 434 Z" fill="#FFFFFF" />
+
+      {/* 駿河湾 — 濃さの違う面を重ねて波を表現 */}
+      <path d={seaBand(648, 0)} fill="#A9D8EC" />
+      <path d={seaBand(700, 16)} fill="#7FC3E4" />
+      <path d={seaBand(762, 15)} fill="#579FD3" />
+      <path d={seaBand(826, 14)} fill="#3A7CBC" />
+
+      {/* 帆船 — 輪郭線なし、面の重なりのみ */}
+      <g transform="translate(1116 744) scale(2.2)">
+        <rect x="-1.6" y="-48" width="3.2" height="46" fill="#0E2D5E" />
+        <path d="M2 -48 L26 -42 L2 -36 Z" fill="#1A56B0" />
+        <path d="M-4 -33 L-4 -4 L-30 -4 Z" fill="#FFFFFF" />
+        <path d="M4 -27 L4 -4 L22 -4 Z" fill="#DCEBF7" />
+        <path d="M-36 -3 L34 -3 L24 12 L-26 12 Z" fill="#0E2D5E" />
+      </g>
+
+      {/* カモメ — 塗りのシェイプ */}
+      <g fill="#4C7FBE">
+        <path d="M834 240 q20 -22 40 -4 q20 -18 40 4 q-22 -10 -40 6 q-18 -16 -40 -6 Z" />
+        <path d="M950 172 q14 -16 28 -3 q14 -13 28 3 q-16 -7 -28 4 q-12 -11 -28 -4 Z" opacity="0.75" />
+        <path d="M780 310 q12 -13 23 -2 q11 -11 23 2 q-13 -6 -23 4 q-10 -10 -23 -4 Z" opacity="0.6" />
+      </g>
+    </svg>);
+
+}
+
+/* =========================================================
    Hero
    ========================================================= */
-function Hero({ motif }) {
+function Hero() {
   return (
-    <section className="hero" id="top" style={{ height: "700px" }}>
-      {motif !== "none" &&
-      <div
-        className={`hero__pattern hero__pattern--${motif}`}
-        aria-hidden="true" />
-
-      }
-      {motif === "featured" &&
-      <svg className="hero__fuji-bg" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-          <path d="M -50 700 L 380 240 L 460 340 L 540 280 L 620 360 L 720 260 L 1100 700 Z" fill="var(--indigo)" opacity="0.07" />
-          <path d="M 700 700 L 1000 360 L 1080 460 L 1160 400 L 1250 460 L 1700 700 Z" fill="var(--indigo)" opacity="0.05" />
-        </svg>
-      }
+    <section className="hero" id="top">
+      <div className="hero__bg" aria-hidden="true">
+        <HeroBackdrop />
+        <div className="hero__scrim"></div>
+      </div>
       <div className="container hero__inner">
         <div className="hero__copy">
           <div className="hero__anchor-row">
@@ -118,10 +173,8 @@ function Hero({ motif }) {
             <span className="anchor anchor--mute">ICHIHO INC.</span>
           </div>
           <h1 className="hero__head">
-            <span className="serif" style={{ textAlign: "left", fontSize: "50px" }}><span style={{ fontSize: "45px" }}>モノの価値を見極め</span></span>
-            <br />
-            <span className="serif" style={{ fontSize: "50px" }}><span style={{ fontSize: "45px" }}>必要な人へ、</span></span>
-            <span className="serif hero__quote" style={{ fontSize: "50px" }}><span style={{ width: "500px", height: "145px", fontSize: "45px" }}>届ける。</span></span>
+            <span className="hero__head-line">モノの価値を見極め</span>
+            <span className="hero__head-line">必要な人へ、<span className="hero__quote">届ける。</span></span>
           </h1>
           <p className="lead hero__lead">
             株式会社ICHIHOは、EC販売・リユース・EC販売支援を通じて、
@@ -129,56 +182,12 @@ function Hero({ motif }) {
             Amazon・楽天市場・メルカリShopsなど複数のECを活用し、
             仕入れから販路開拓・商品ページ改善まで対応します。
           </p>
-          <div className="hero__cta">
-            <a href="#business" className="btn btn--primary" data-jump="business">事業内容を見る</a>
-            <a href="contact.html" className="btn btn--ghost">お問い合わせ</a>
-          </div>
-          <dl className="hero__metrics">
-            <div className="hero__metric">
-              <dt className="anchor">DIVISIONS</dt>
-              <dd className="num">3</dd>
-            </div>
-            <div className="hero__metric">
-              <dt className="anchor">CHANNELS</dt>
-              <dd className="num">5+</dd>
-            </div>
-            <div className="hero__metric">
-              <dt className="anchor">LICENSE</dt>
-              <dd className="num">古物商</dd>
-            </div>
-          </dl>
-        </div>
-        <div className="hero__visual" aria-hidden="true">
-          <div className="hero__visual-illustration">
-            <img src="assets/illustration-shizuoka.svg" alt="" />
-            <div className="hero__visual-illustration-foot">
-              <span className="anchor">VIEW</span>
-              <span className="small">駿河湾と富士山 / 静岡より</span>
-            </div>
-          </div>
-          <div className="hero__visual-card hero__visual-card--new">
-            <span className="tag tag--new">EC販売</span>
-            <div className="hero__visual-stat">
-              <span className="num">家電 · 日用品 · ホビー</span>
-              <span className="small">Amazon / 楽天市場</span>
-            </div>
-          </div>
-          <div className="hero__visual-card hero__visual-card--reuse">
-            <span className="tag tag--reuse">リユース</span>
-            <div className="hero__visual-stat">
-              <span className="num">買取 · 回収 · 再販</span>
-              <span className="small">ecoサイクル</span>
-            </div>
-          </div>
-          <div className="hero__visual-card hero__visual-card--support">
-            <span className="tag tag--support">EC販売支援</span>
-            <div className="hero__visual-stat">
-              <span className="num">販路開拓 · ページ改善</span>
-              <span className="small">地域メーカー支援</span>
-            </div>
-          </div>
         </div>
       </div>
+      <a className="hero__scroll" href="#philosophy" data-jump="philosophy" aria-label="Scroll down">
+        <span className="hero__scroll-txt">Scroll down</span>
+        <span className="hero__scroll-line" aria-hidden="true"></span>
+      </a>
     </section>);
 
 }
@@ -190,6 +199,7 @@ function SectionHead({ num, anchor, jp, sub }) {
   return (
     <div className="section-head">
       <div className="section-head__row">
+        <span className="section-head__mark" aria-hidden="true"></span>
         <span className="section-head__num">{num}</span>
         <span className="anchor">{anchor}</span>
       </div>
@@ -247,34 +257,22 @@ function PhilosophySection() {
 function BusinessSection() {
   const items = [
   {
-    no: "4-1",
     file: "business-ec.html",
-    tag: { label: "EC販売事業", cls: "tag--new" },
     title: "EC販売事業",
-    lead: "商品価値を、最適な市場へ。",
     body: "家電・日用品・食品・ホビー用品など幅広い商品のEC販売を行っています。商品の特性や市場動向を分析し、Amazon・楽天市場・メルカリShopsなど、それぞれの商品に最適な販売チャネルを選定。豊富な販売データをもとに、価値を最大化する販売を実現します。",
-    stats: [["MARKETS", "複数ECモール"], ["DATA", "販売データ活用"]],
     cls: "business__card--new"
   },
   {
-    no: "4-2",
     file: "business-reuse.html",
-    tag: { label: "リユース事業 / ecoサイクル", cls: "tag--reuse" },
     logo: "assets/eco-cycle-logo.png",
     title: "リユース事業",
-    lead: "モノの価値を、次の人へ。",
     body: "ecoサイクルでは、不用品の買取・回収を通じて、まだ使えるモノを必要とする人へ届けています。家電・パソコン・オーディオ機器・ホビー用品・日用品など幅広く対応。個人のお客様から法人様まで、さまざまなご相談を承ります。",
-    stats: [["BUY", "買取・回収"], ["LICENSE", "古物商許可"]],
     cls: "business__card--reuse"
   },
   {
-    no: "4-3",
     file: "business-support.html",
-    tag: { label: "EC販売支援事業", cls: "tag--support" },
     title: "EC販売支援事業",
-    lead: "地域の価値を、全国へ。",
     body: "地域メーカー様・卸業者様・生産者様の商品を、ECを活用して全国のお客様へ届ける販売支援を行っています。EC販売で培った経験を活かし、販路開拓・商品ページ改善・販売戦略の提案・販売パートナー事業まで、売上拡大をサポートします。",
-    stats: [["GROWTH", "販路開拓"], ["PAGES", "ページ改善"]],
     cls: "business__card--support"
   }];
 
@@ -285,30 +283,15 @@ function BusinessSection() {
         <div className="business__grid business__grid--three">
           {items.map((it, i) =>
           <a key={i} href={it.file} className={`business__card ${it.cls}`}>
-              <header className="business__card-head">
-                <div className="business__card-top">
-                  <span className="business__no">{it.no}</span>
-                  <span className={`tag ${it.tag.cls}`}>{it.tag.label}</span>
-                </div>
-                <div className="business__title-row">
-                  <h3 className="h2 business__title">{it.title}</h3>
-                  {it.logo &&
-                <img className="business__logo" src={it.logo} alt="ecoサイクル" />
-                }
-                </div>
-                <p className="lead business__lead">{it.lead}</p>
-              </header>
+              <div className="business__title-row">
+                <h3 className="h2 business__title">{it.title}</h3>
+                {it.logo &&
+              <img className="business__logo" src={it.logo} alt="ecoサイクル" />
+              }
+              </div>
               <p className="body business__body">{it.body}</p>
-              <footer className="business__card-foot">
-                {it.stats.map(([en, jp]) =>
-              <div key={en} className="business__stat">
-                    <span className="anchor business__stat-en">{en}</span>
-                    <span className="small business__stat-jp">{jp}</span>
-                  </div>
-              )}
-              </footer>
-              <span className="business__more">詳しく見る
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <span className="business__more" aria-hidden="true">
+                <span className="rnd-arrow"><ArrowRight /></span>
               </span>
             </a>
           )}
