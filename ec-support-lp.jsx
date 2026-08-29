@@ -1,4 +1,4 @@
-/* global React, ReactDOM, SiteHeader, SiteFooter, HOME, CONTACT */
+/* global React, ReactDOM, SiteHeader, SiteFooter, FeatureIcon, HOME, CONTACT */
 /* EC販売支援事業 — BtoB向けページ。header/footer は shared.jsx から。
    スタイルは support-page.css（このページ専用）。
    デザインはトップページと共通のシステム（Noto Sans JP / 紺ブルー + スカイブルー /
@@ -42,11 +42,11 @@ const WORRIES = [
   "在庫や既存商品を、もっと多くのお客様に届けたい",
 ];
 const SERVICES = [
-  { t: "商品ページ作成", d: "楽天市場やAmazonで販売するための商品ページを作成します。商品の特徴、使用シーン、価格帯、競合商品を確認しながら、購入につながりやすいページ作りを行います。" },
-  { t: "販売導線の改善", d: "お客様が商品を見つけ、比較し、購入しやすくなるように、商品名・説明文・画像構成・価格設定・訴求内容を改善します。" },
-  { t: "受注対応・販売管理", d: "注文確認、販売状況の確認、必要に応じたお客様対応など、EC販売に必要な実務をサポートします。" },
-  { t: "広告運用・販促施策", d: "楽天市場やAmazon内での広告、クーポン、ポイント施策、キャンペーン時期に合わせた販売改善を行います。" },
-  { t: "販売データの分析", d: "販売数、アクセス数、転換率、広告効果、競合状況を確認しながら、継続的に改善していきます。" },
+  { icon: "productpage", t: "商品ページ作成", d: "楽天市場やAmazonで販売するための商品ページを作成します。商品の特徴、使用シーン、価格帯、競合商品を確認しながら、購入につながりやすいページ作りを行います。" },
+  { icon: "funnel", t: "販売導線の改善", d: "お客様が商品を見つけ、比較し、購入しやすくなるように、商品名・説明文・画像構成・価格設定・訴求内容を改善します。" },
+  { icon: "orders", t: "受注対応・販売管理", d: "注文確認、販売状況の確認、必要に応じたお客様対応など、EC販売に必要な実務をサポートします。" },
+  { icon: "promo", t: "広告運用・販促施策", d: "楽天市場やAmazon内での広告、クーポン、ポイント施策、キャンペーン時期に合わせた販売改善を行います。" },
+  { icon: "analytics", t: "販売データの分析", d: "販売数、アクセス数、転換率、広告効果、競合状況を確認しながら、継続的に改善していきます。" },
 ];
 const TARGETS = [
   { ic: "factory", t: "メーカー様" },
@@ -68,12 +68,12 @@ const FIT = [
   { ic: "box", t: "食品、日用品、雑貨、ペット用品、ホビー用品など" },
 ];
 const EC_FLOW = [
-  { t: "お問い合わせ", d: "まずは、取り扱い商品や現在の販売状況についてお聞かせください。" },
-  { t: "商品内容の確認", d: "商品内容、卸価格、想定販売価格、在庫数、供給体制を確認します。" },
-  { t: "販売可否の判断", d: "EC販売との相性、利益率、競合状況を確認し、販売可能か判断します。" },
-  { t: "販売ページ作成", d: "商品ページ、商品説明、販売導線を整えます。" },
-  { t: "販売開始", d: "楽天市場など、商品に合った販路で販売を開始します。" },
-  { t: "販売改善", d: "販売データを確認しながら、価格、ページ内容、広告、販促施策を改善していきます。" },
+  { icon: "contact", t: "お問い合わせ", d: "まずは、取り扱い商品や現在の販売状況についてお聞かせください。" },
+  { icon: "checklist", t: "商品内容の確認", d: "商品内容、卸価格、想定販売価格、在庫数、供給体制を確認します。" },
+  { icon: "balance", t: "販売可否の判断", d: "EC販売との相性、利益率、競合状況を確認し、販売可能か判断します。" },
+  { icon: "productpage", t: "販売ページ作成", d: "商品ページ、商品説明、販売導線を整えます。" },
+  { icon: "launch", t: "販売開始", d: "楽天市場など、商品に合った販路で販売を開始します。" },
+  { icon: "growth", t: "販売改善", d: "販売データを確認しながら、価格、ページ内容、広告、販促施策を改善していきます。" },
 ];
 const EC_FAQ = [
   { q: "初期費用はかかりますか？", a: "商品内容や販売条件によって異なります。初期費用・月額固定費を抑えた成果報酬型でのご相談も可能です。" },
@@ -163,7 +163,7 @@ function EcSupportPage() {
               <div className="sp-fv__copy">
                 <span className="sp-fv__no">SALES SUPPORT · EC販売支援</span>
                 <h1 className="sp-fv__title">良い商品を、<br /><span className="accent">もっと多くのお客様へ。</span></h1>
-                <p className="sp-fv__lead">東海オンラインショップでは、楽天市場を中心に、メーカー様・卸業者様の商品販売を支援しています。商品ページ作成から広告運用・販売データ分析まで、EC販売に必要な業務を実務ベースでサポートします。</p>
+                <p className="sp-fv__lead">株式会社ICHIHOでは、メーカー様・卸業者様の商品を、楽天市場・AmazonなどのECモールを通じて全国のお客様へ販売しています。商品ページの作成から販売・販促・データ分析まで一貫して行い、商品の新たな販路づくりを支援します。</p>
                 <div className="sp-fv__cta">
                   <SpBtn href={CONTACT} variant="primary">無料で相談する</SpBtn>
                   <SpBtn href="#services" variant="ghost">サービス内容を見る</SpBtn>
@@ -192,10 +192,11 @@ function EcSupportPage() {
         {/* Services */}
         <section className="sp-sec sp-sec--tint sp-wave sp-wave--tint" id="services">
           <div className="container">
-            <SecHead anchor="SERVICES" jp="東海オンラインショップができること" />
+            <SecHead anchor="SERVICES" jp="株式会社ICHIHOができること" />
             <div className="sp-services">
               {SERVICES.map((s, i) => (
                 <article key={i} className="sp-service">
+                  <FeatureIcon name={s.icon} className="sp-service__icon" />
                   <span className="sp-service__no">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="sp-service__t">{s.t}</h3>
                   <p className="sp-service__d">{s.d}</p>
@@ -299,10 +300,13 @@ function EcSupportPage() {
             <ol className="sp-flow">
               {EC_FLOW.map((s, i) => (
                 <li key={i} className="sp-flow__item">
+                  <FeatureIcon name={s.icon} className="sp-flow__icon" />
                   <span className="sp-flow__no">STEP</span>
                   <span className="sp-flow__num">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="sp-flow__t">{s.t}</h3>
                   <p className="sp-flow__d">{s.d}</p>
+                  {i < EC_FLOW.length - 1 && <span className="sp-flow__arrow" aria-hidden="true" />}
+                  {i === 2 && <span className="sp-flow__wrap" aria-hidden="true" />}
                 </li>
               ))}
             </ol>

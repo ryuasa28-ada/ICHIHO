@@ -214,7 +214,11 @@
   margin-bottom: 30px; text-wrap: pretty;
 }
 .sp-fv__title .accent { color: var(--sp-blue); }
-.sp-fv__lead { font-size: clamp(15px, 1.6vw, 18px); line-height: 2.1; margin: 0 0 44px; max-width: 36em; }
+/* 末尾に「す。」だけが落ちる泣き別れを防ぐため、各行の長さを揃えて折り返す */
+.sp-fv__lead {
+  font-size: clamp(15px, 1.6vw, 18px); line-height: 2.1; margin: 0 0 44px;
+  max-width: 36em; text-wrap: balance;
+}
 .sp-fv__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
 @media (min-width: 940px) {
   .sp-fv { padding: 56px 0 140px; }
@@ -266,6 +270,7 @@
   box-shadow: 0 24px 50px rgba(14, 45, 94, 0.14);
   border-color: rgba(26, 86, 176, 0.26);
 }
+.sp-service__icon { width: 148px; height: 148px; margin-bottom: 2px; }
 .sp-service__no {
   font-family: var(--font-en); font-size: 12px; font-weight: 700;
   letter-spacing: 0.2em; color: var(--sp-blue);
@@ -369,14 +374,42 @@
 /* ---------------------------------------------------------
    Flow
    --------------------------------------------------------- */
-.sp-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 18px; }
-@media (min-width: 720px) { .sp-flow { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1080px) { .sp-flow { grid-template-columns: repeat(3, 1fr); } }
+/* 時系列を見せるため、カードの間に矢印を置く。矢印はカードの外側へ絶対配置して
+   グリッドの列幅を食わない。3 列時の 03→04 の折り返しだけは行間を左へ戻る線で示す。
+   SP は縦 1 列になり、矢印はすべて下向きに切り替わる。 */
+.sp-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 34px; }
+@media (min-width: 1080px) { .sp-flow { grid-template-columns: repeat(3, 1fr); gap: 34px 30px; } }
 .sp-flow__item {
+  position: relative;
   background: #fff; border: 1px solid var(--sp-line); border-radius: 20px;
   padding: 26px 24px 24px;
   display: flex; flex-direction: column; gap: 8px;
   box-shadow: 0 8px 22px rgba(14, 45, 94, 0.06);
+}
+.sp-flow__icon { width: 148px; height: 148px; margin: 0 auto 2px; }
+.sp-flow__arrow {
+  position: absolute; width: 22px; height: 22px;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238CA6C6' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><path d='M4 12h14M12.5 6l6 6-6 6'/></svg>") center / contain no-repeat;
+  left: 50%; bottom: -29px; transform: translateX(-50%) rotate(90deg);
+}
+.sp-flow__wrap { display: none; }
+@media (min-width: 1080px) {
+  .sp-flow__arrow { left: auto; right: -27px; bottom: auto; top: 50%; transform: translateY(-50%); }
+  .sp-flow__item:nth-child(3) .sp-flow__arrow { display: none; }
+  /* 行末（03）から行頭（04）へ、グリッド幅いっぱいに戻る線 */
+  .sp-flow__wrap {
+    display: block; position: absolute;
+    left: calc(-200% - 64px); right: 0; bottom: -26px; height: 18px;
+  }
+  .sp-flow__wrap::before {
+    content: ""; position: absolute; left: 22px; right: 0; top: 50%;
+    height: 2px; margin-top: -1px; background: #C4D3E4;
+  }
+  .sp-flow__wrap::after {
+    content: ""; position: absolute; left: 0; top: 50%;
+    width: 18px; height: 18px; margin-top: -9px;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238CA6C6' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><path d='M4 12h14M12.5 6l6 6-6 6'/></svg>") center / contain no-repeat; transform: rotate(180deg);
+  }
 }
 .sp-flow__no { font-family: var(--font-en); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--sp-mute); }
 .sp-flow__num { font-family: var(--font-en); font-size: 30px; font-weight: 700; line-height: 1; color: var(--sp-blue); }

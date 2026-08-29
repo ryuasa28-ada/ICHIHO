@@ -105,15 +105,45 @@ function ArrowRight() {
 
 }
 
-/* ヒーロー全面に敷くフラットベクターの駿河湾。
+/* ヒーロー全面に敷くフラットベクターの静岡×物流シーン。
+   奥に富士山、中景に配送センター、手前を横切る高架の高速道路をトラックが走る。
    空は CSS のグラデーションが担当し、SVG は幅いっぱい・下端基準で重ねる。
    こうすると画面比が変わっても横方向がトリミングされない。 */
-/* 波は線ではなく「面」で描く。y を頂点とする緩やかな帯を下端まで塗りつぶす。 */
-function seaBand(y, amp) {
-  const seg = 200;
-  let d = `M0 ${y} Q${seg / 4} ${y - amp} ${seg / 2} ${y}`;
-  for (let x = seg; x <= 1600 + seg; x += seg / 2) d += ` T${x} ${y}`;
-  return `${d} L1600 900 L0 900 Z`;
+
+/* 配送トラック（側面・右向き）— 接地面をローカル y=0 とする。
+   荷台の三本線は「届ける」を表す ICHIHO のシンプルな記号。 */
+function DeliveryTruck() {
+  return (
+    <g>
+      <rect x="-100" y="-26" width="168" height="7" fill="#16305A" />
+      <rect x="-100" y="-78" width="122" height="52" fill="#F2F8FC" />
+      <rect x="-100" y="-32" width="122" height="6" fill="#CFE0EF" />
+      <rect x="-84" y="-68" width="54" height="6" fill="#1E4A88" />
+      <rect x="-84" y="-56" width="40" height="6" fill="#2C6EC6" />
+      <rect x="-84" y="-44" width="26" height="6" fill="#D17A3F" />
+      <path d="M24 -62 L48 -62 L68 -38 L68 -26 L24 -26 Z" fill="#22528F" />
+      <path d="M33 -57 L47 -57 L59 -41 L33 -41 Z" fill="#BFE0F0" />
+      <rect x="60" y="-26" width="10" height="9" fill="#16305A" />
+      <circle cx="-62" cy="-10" r="10" fill="#16305A" />
+      <circle cx="42" cy="-10" r="10" fill="#16305A" />
+      <circle cx="-62" cy="-10" r="4" fill="#DCEBF7" />
+      <circle cx="42" cy="-10" r="4" fill="#DCEBF7" />
+    </g>);
+
+}
+
+/* 高架橋脚。x を橋脚の中心、天端を y=804 とする。 */
+function Viaduct() {
+  return (
+    <g>
+      {[200, 660, 1120, 1560].map((x) =>
+      <g key={x}>
+        <rect x={x - 40} y="804" width="80" height="13" fill="#1F3D6B" />
+        <rect x={x - 27} y="817" width="54" height="83" fill="#2A5FA8" />
+      </g>
+      )}
+    </g>);
+
 }
 
 function HeroBackdrop() {
@@ -130,27 +160,48 @@ function HeroBackdrop() {
       <path d="M690 660 L952 344 L1000 660 Z" fill="#1A56B0" />
       <path d="M900 420 L952 344 L1004 406 L1042 386 L1074 424 L1022 438 L968 420 L932 434 Z" fill="#FFFFFF" />
 
-      {/* 駿河湾 — 濃さの違う面を重ねて波を表現 */}
-      <path d={seaBand(648, 0)} fill="#A9D8EC" />
-      <path d={seaBand(700, 16)} fill="#7FC3E4" />
-      <path d={seaBand(762, 15)} fill="#579FD3" />
-      <path d={seaBand(826, 14)} fill="#3A7CBC" />
+      {/* 地面 — 濃さの違う帯で奥行きを出す */}
+      <rect x="0" y="660" width="1600" height="52" fill="#C3DEF2" />
 
-      {/* 帆船 — 輪郭線なし、面の重なりのみ */}
-      <g transform="translate(1116 744) scale(2.2)">
-        <rect x="-1.6" y="-48" width="3.2" height="46" fill="#0E2D5E" />
-        <path d="M2 -48 L26 -42 L2 -36 Z" fill="#1A56B0" />
-        <path d="M-4 -33 L-4 -4 L-30 -4 Z" fill="#FFFFFF" />
-        <path d="M4 -27 L4 -4 L22 -4 Z" fill="#DCEBF7" />
-        <path d="M-36 -3 L34 -3 L24 12 L-26 12 Z" fill="#0E2D5E" />
+      {/* 物流倉庫・配送センター — 富士山の手前、地平線の上 */}
+      <g transform="translate(1230 700) scale(0.95)">
+        {/* 付属棟 */}
+        <path d="M-206 -54 L-163 -80 L-120 -54 Z" fill="#1E4A88" />
+        <rect x="-196" y="-54" width="66" height="54" fill="#3A78BE" />
+        <rect x="-176" y="-38" width="26" height="38" fill="#DCEBF7" />
+        {/* 本棟 — 切妻屋根。軒に富士朝焼けの差し色を一本だけ入れる */}
+        <path d="M-148 -86 L0 -142 L148 -86 Z" fill="#1E4A88" />
+        <rect x="-148" y="-92" width="296" height="9" fill="#D17A3F" />
+        <rect x="-130" y="-84" width="260" height="84" fill="#4E8CCF" />
+        <rect x="62" y="-84" width="68" height="84" fill="#3A78BE" />
+        {/* シャッター門 */}
+        <rect x="-58" y="-60" width="116" height="60" fill="#EAF4FB" />
+        <rect x="-58" y="-48" width="116" height="5" fill="#BBD7EE" />
+        <rect x="-58" y="-33" width="116" height="5" fill="#BBD7EE" />
+        <rect x="-58" y="-18" width="116" height="5" fill="#BBD7EE" />
+        {/* 小窓 */}
+        <rect x="-120" y="-66" width="26" height="22" fill="#DCEBF7" />
+        <rect x="-86" y="-66" width="26" height="22" fill="#DCEBF7" />
+        <rect x="78" y="-66" width="26" height="22" fill="#CFE2F3" />
       </g>
 
-      {/* カモメ — 塗りのシェイプ */}
-      <g fill="#4C7FBE">
-        <path d="M834 240 q20 -22 40 -4 q20 -18 40 4 q-22 -10 -40 6 q-18 -16 -40 -6 Z" />
-        <path d="M950 172 q14 -16 28 -3 q14 -13 28 3 q-16 -7 -28 4 q-12 -11 -28 -4 Z" opacity="0.75" />
-        <path d="M780 310 q12 -13 23 -2 q11 -11 23 2 q-13 -6 -23 4 q-10 -10 -23 -4 Z" opacity="0.6" />
+      <rect x="0" y="712" width="1600" height="94" fill="#A9D0EA" />
+      <rect x="0" y="806" width="1600" height="94" fill="#8CBCDE" />
+
+      {/* 高速道路（高架）— 橋脚 → 桁 → 路面の順に重ねる */}
+      <Viaduct />
+      <rect x="0" y="768" width="1600" height="32" fill="#1F3D6B" />
+      <rect x="0" y="800" width="1600" height="6" fill="#16305A" />
+      <rect x="0" y="758" width="1600" height="10" fill="#6BA3DB" />
+      <g fill="#DCEBF7">
+        {[0, 130, 260, 390, 520, 650, 780, 910, 1040, 1170, 1300, 1430, 1560].map((x) =>
+        <rect key={x} x={x} y="761" width="66" height="4" />
+        )}
       </g>
+
+      {/* 配送トラック — 右向き＝前へ進む／届ける */}
+      <g transform="translate(960 758)"><DeliveryTruck /></g>
+      <g transform="translate(1490 758)"><DeliveryTruck /></g>
     </svg>);
 
 }

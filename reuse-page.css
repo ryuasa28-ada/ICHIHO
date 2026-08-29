@@ -335,7 +335,8 @@
 .rp-gallery__track {
   display: flex; flex-shrink: 0; align-items: center;
   gap: 20px; padding-right: 20px;
-  animation: rpGallery 52s linear infinite;
+  /* 1 コマあたり約 4.35 秒。枚数が増減してもスクロール速度は変わらない。 */
+  animation: rpGallery calc(var(--rp-gallery-items, 12) * 4.35s) linear infinite;
   will-change: transform;
 }
 @keyframes rpGallery { from { transform: translateX(0); } to { transform: translateX(-100%); } }
@@ -350,7 +351,7 @@
   width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;
 }
 @media (max-width: 768px) {
-  .rp-gallery__track { gap: 14px; padding-right: 14px; animation-duration: 38s; }
+  .rp-gallery__track { gap: 14px; padding-right: 14px; animation-duration: calc(var(--rp-gallery-items, 12) * 3.2s); }
   .rp-gallery__item { width: 220px; border-radius: 14px; }
 }
 
@@ -398,13 +399,24 @@
 /* ---------------------------------------------------------
    Flow
    --------------------------------------------------------- */
-.rp-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 18px; }
-@media (min-width: 720px) { .rp-flow { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1040px) { .rp-flow { grid-template-columns: repeat(5, 1fr); gap: 14px; } }
+/* 時系列であることを見せるため、カードの間に矢印を置く。矢印はカードの外側へ
+   絶対配置してグリッドの列幅を食わない。SP は縦 1 列＋下向き矢印。 */
+.rp-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 34px; }
+@media (min-width: 1040px) { .rp-flow { grid-template-columns: repeat(5, 1fr); gap: 30px; } }
 .rp-flow__item {
+  position: relative;
   background: #fff; border-radius: 20px; padding: 26px 22px 24px;
   border: 2px solid var(--rp-line);
   display: flex; flex-direction: column; gap: 10px;
+}
+.rp-flow__icon { width: 84px; height: 84px; margin: 0 auto 2px; }
+.rp-flow__arrow {
+  position: absolute; width: 22px; height: 22px;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238CA6C6' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><path d='M4 12h14M12.5 6l6 6-6 6'/></svg>") center / contain no-repeat;
+  left: 50%; bottom: -30px; transform: translateX(-50%) rotate(90deg);
+}
+@media (min-width: 1040px) {
+  .rp-flow__arrow { left: auto; right: -28px; bottom: auto; top: 50%; transform: translateY(-50%); }
 }
 .rp-flow__no { font-family: Inter, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--rp-mute); }
 .rp-flow__num {

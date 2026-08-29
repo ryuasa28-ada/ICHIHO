@@ -1,23 +1,23 @@
-/* global React, ReactDOM, SiteHeader, SiteFooter, HOME, CONTACT, CONTACT_ECO */
+/* global React, ReactDOM, SiteHeader, SiteFooter, FeatureIcon, HOME, CONTACT, CONTACT_ECO */
 /* リユース事業 / ecoサイクル — 集客ページ。header/footer は shared.jsx から。
    スタイルは reuse-page.css（このページ専用）。文言は既存のものをそのまま使用。 */
 const { useState: useRpState, useEffect: useRpEffect, useRef: useRpRef } = React;
 
 const TEL = "070-9204-5260";
 const TELHREF = "tel:" + TEL.replace(/-/g, "");
-const LINE = "#"; /* TODO: LINE公式アカウントURLに差し替え */
+const LINE = "https://line.me/R/ti/p/@379dykgb"; /* LINE公式アカウント 友だち追加 */
 
 /* ---------------------------------------------------------
    写真素材。差し替えはここだけ直せば全箇所に反映される。
    実ファイルは assets/photos/（README に手順あり）。
    --------------------------------------------------------- */
 const PHOTOS = {
-  /* ギャラリーの流れるサムネイル。枚数は自由に増減できる。 */
+  /* ギャラリーの流れるサムネイル。枚数は自由に増減できる。
+     追加するときは gallery-04.jpg … と連番で置いて、この配列に足すだけ。 */
   slides: [
-    { src: "assets/photos/slide-01.svg", alt: "出張買取の様子" },
-    { src: "assets/photos/slide-02.svg", alt: "家電・デジタル機器の査定" },
-    { src: "assets/photos/slide-03.svg", alt: "倉庫・在庫品の整理" },
-    { src: "assets/photos/slide-04.svg", alt: "スタッフの丁寧な対応" },
+    { src: "assets/photos/gallery-01.jpg", alt: "倉庫に積まれた家電の在庫" },
+    { src: "assets/photos/gallery-02.jpg", alt: "コンテナで仕分けたホビー・ゲーム商品" },
+    { src: "assets/photos/gallery-03.jpg", alt: "棚に並ぶ家電・PC周辺機器の在庫" },
   ],
 };
 
@@ -61,11 +61,11 @@ const REC = [
   "処分する前に買取できるか知りたい方",
 ];
 const FLOW = [
-  { t: "お問い合わせ", d: "LINE・電話・メールよりお問い合わせください。商品名・型番・状態・お写真をお送りいただけるとスムーズです。" },
-  { t: "商品内容の確認", d: "お品物の内容や点数、対応エリアを確認いたします。" },
-  { t: "査定", d: "商品の状態や需要、付属品の有無などを確認し、査定金額をご案内いたします。" },
-  { t: "買取成立", d: "査定金額にご納得いただけましたら、買取成立となります。" },
-  { t: "お支払い", d: "その場で現金買取が可能です。法人様や高額買取の場合は、お振込みでの対応となる場合もございます。" },
+  { icon: "contact", t: "お問い合わせ", d: "LINE・電話・メールよりお問い合わせください。商品名・型番・状態・お写真をお送りいただけるとスムーズです。" },
+  { icon: "checklist", t: "商品内容の確認", d: "お品物の内容や点数、対応エリアを確認いたします。" },
+  { icon: "appraisal", t: "査定", d: "商品の状態や需要、付属品の有無などを確認し、査定金額をご案内いたします。" },
+  { icon: "deal", t: "買取成立", d: "査定金額にご納得いただけましたら、買取成立となります。" },
+  { icon: "payment", t: "お支払い", d: "その場で現金買取が可能です。法人様や高額買取の場合は、お振込みでの対応となる場合もございます。" },
 ];
 const REASONS = [
   { t: "静岡市地域密着の出張買取", d: "静岡市を中心に、地域密着で出張買取を行っています。地元のお客様に安心してご利用いただけるよう、丁寧な対応を心がけています。" },
@@ -147,6 +147,8 @@ function FaqItem({ item, i }) {
 /* ---------------------------------------------------------
    画像ギャラリー：サムネイルが途切れず一定速度で流れ続けるマーキー。
    1セットを3回並べたトラックを2本置くことで、継ぎ目なくループする。
+   写真の枚数を変えるとトラックの幅も変わるので、--rp-gallery-items に
+   実際のコマ数を渡して CSS 側で再生時間を算出させる（速度が一定になる）。
    --------------------------------------------------------- */
 const GALLERY_REPEAT = 3;
 
@@ -164,7 +166,7 @@ function PhotoMarquee({ photos }) {
       ))}
     </div>
   );
-  return <div className="rp-gallery">{track(false)}{track(true)}</div>;
+  return <div className="rp-gallery" style={{ "--rp-gallery-items": set.length }}>{track(false)}{track(true)}</div>;
 }
 
 /* ---------------------------------------------------------
@@ -312,10 +314,12 @@ function ReusePage() {
             <ol className="rp-flow">
               {FLOW.map((s, i) => (
                 <li key={i} className="rp-flow__item">
+                  <FeatureIcon name={s.icon} className="rp-flow__icon" />
                   <span className="rp-flow__no">STEP</span>
                   <span className="rp-flow__num">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="rp-flow__t">{s.t}</h3>
                   <p className="rp-flow__d">{s.d}</p>
+                  {i < FLOW.length - 1 && <span className="rp-flow__arrow" aria-hidden="true" />}
                 </li>
               ))}
             </ol>

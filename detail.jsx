@@ -1,4 +1,4 @@
-/* global React, PAGE_DATA, SiteHeader, SiteFooter, HOME, CONTACT */
+/* global React, PAGE_DATA, SiteHeader, SiteFooter, FeatureIcon, HOME, CONTACT */
 /* Detail-page body. Header/footer come from shared.jsx (window.SiteHeader / SiteFooter). */
 
 /* =========================================================
@@ -80,6 +80,7 @@ function DetailApp() {
             <div className="feat-grid">
               {d.features.items.map((f, i) => (
                 <article key={i} className="feat">
+                  {f.icon && <FeatureIcon name={f.icon} />}
                   <span className="feat__no">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="feat__t">{f.t}</h3>
                   <p className="feat__d">{f.d}</p>
