@@ -255,7 +255,17 @@
    --------------------------------------------------------- */
 .sp-services { display: grid; grid-template-columns: 1fr; gap: 24px; }
 @media (min-width: 720px) { .sp-services { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1080px) { .sp-services { grid-template-columns: repeat(3, 1fr); } }
+/* 5枚を3列で組むと下段2枚が左詰めになるため、6列グリッドにして
+   各カードを2列分（＝3列グリッドの1列分と同幅）に割り当てる。
+   4枚目・5枚目は列を1つ内側にずらすことで、自動的に2段目・中央寄せになる。 */
+@media (min-width: 1080px) {
+  .sp-services { grid-template-columns: repeat(6, 1fr); }
+  .sp-service:nth-child(1) { grid-column: 1 / span 2; }
+  .sp-service:nth-child(2) { grid-column: 3 / span 2; }
+  .sp-service:nth-child(3) { grid-column: 5 / span 2; }
+  .sp-service:nth-child(4) { grid-column: 2 / span 2; }
+  .sp-service:nth-child(5) { grid-column: 4 / span 2; }
+}
 .sp-service {
   background: #fff; border: 1px solid var(--sp-line); border-radius: 22px;
   padding: 34px 30px 30px;

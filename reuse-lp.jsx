@@ -258,8 +258,31 @@ function ReusePage() {
           </div>
         </section>
 
-        {/* Gallery — スライドショー + 写真グリッド */}
+        {/* Flow */}
         <section className="rp-sec rp-wave rp-wave--white">
+          <div className="container">
+            <div className="rp-head">
+              <Anchor text="FLOW" />
+              <h2 className="rp-head__jp">買取の<span className="rp-red">流れ</span></h2>
+              <p className="rp-head__sub">LINE・電話・メールから、かんたんにご相談いただけます。</p>
+            </div>
+            <ol className="rp-flow">
+              {FLOW.map((s, i) => (
+                <li key={i} className="rp-flow__item">
+                  <FeatureIcon name={s.icon} className="rp-flow__icon" />
+                  <span className="rp-flow__no">STEP</span>
+                  <span className="rp-flow__num">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className="rp-flow__t">{s.t}</h3>
+                  <p className="rp-flow__d">{s.d}</p>
+                  {i < FLOW.length - 1 && <span className="rp-flow__arrow" aria-hidden="true" />}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Gallery — スライドショー + 写真グリッド */}
+        <section className="rp-sec">
           <div className="container">
             <div className="rp-head"><Anchor text="GALLERY" /></div>
           </div>
@@ -300,29 +323,6 @@ function ReusePage() {
                 </article>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Flow */}
-        <section className="rp-sec rp-wave rp-wave--white">
-          <div className="container">
-            <div className="rp-head">
-              <Anchor text="FLOW" />
-              <h2 className="rp-head__jp">買取の<span className="rp-red">流れ</span></h2>
-              <p className="rp-head__sub">LINE・電話・メールから、かんたんにご相談いただけます。</p>
-            </div>
-            <ol className="rp-flow">
-              {FLOW.map((s, i) => (
-                <li key={i} className="rp-flow__item">
-                  <FeatureIcon name={s.icon} className="rp-flow__icon" />
-                  <span className="rp-flow__no">STEP</span>
-                  <span className="rp-flow__num">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="rp-flow__t">{s.t}</h3>
-                  <p className="rp-flow__d">{s.d}</p>
-                  {i < FLOW.length - 1 && <span className="rp-flow__arrow" aria-hidden="true" />}
-                </li>
-              ))}
-            </ol>
           </div>
         </section>
 

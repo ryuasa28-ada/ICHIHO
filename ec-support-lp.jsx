@@ -173,22 +173,6 @@ function EcSupportPage() {
           </div>
         </section>
 
-        {/* Worries */}
-        <section className="sp-sec sp-wave sp-wave--white">
-          <div className="container">
-            <SecHead anchor="CHALLENGES" jp="こんなお悩みはありませんか？" />
-            <div className="sp-checks">
-              {WORRIES.map((w, i) => (
-                <div key={i} className="sp-check">
-                  <span className="sp-check__ic" aria-hidden="true">{E.check}</span>
-                  <p className="sp-check__t">{w}</p>
-                </div>
-              ))}
-            </div>
-            <p className="sp-lead-note">そのようなお悩みを、EC販売の実務経験をもとにサポートします。</p>
-          </div>
-        </section>
-
         {/* Services */}
         <section className="sp-sec sp-sec--tint sp-wave sp-wave--tint" id="services">
           <div className="container">
@@ -206,8 +190,24 @@ function EcSupportPage() {
           </div>
         </section>
 
-        {/* Target businesses */}
+        {/* Worries */}
         <section className="sp-sec sp-wave sp-wave--white">
+          <div className="container">
+            <SecHead anchor="CHALLENGES" jp="こんなお悩みはありませんか？" />
+            <div className="sp-checks">
+              {WORRIES.map((w, i) => (
+                <div key={i} className="sp-check">
+                  <span className="sp-check__ic" aria-hidden="true">{E.check}</span>
+                  <p className="sp-check__t">{w}</p>
+                </div>
+              ))}
+            </div>
+            <p className="sp-lead-note">そのようなお悩みを、EC販売の実務経験をもとにサポートします。</p>
+          </div>
+        </section>
+
+        {/* Target businesses */}
+        <section className="sp-sec">
           <div className="container">
             <SecHead anchor="FOR" jp="対象となる事業者様" />
             <div className="sp-tiles">
