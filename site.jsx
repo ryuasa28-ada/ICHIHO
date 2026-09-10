@@ -384,9 +384,9 @@ function EcoSection() {
               <span className="eco__btn-sub">いちばん簡単</span>
               <span className="eco__btn-main">LINEで相談する</span>
             </a>
-            <a className="eco__btn eco__btn--tel" href="tel:07092045260">
+            <a className="eco__btn eco__btn--tel" href="tel:0543979023">
               <span className="eco__btn-sub">お電話でのご相談</span>
-              <span className="eco__btn-main">070-9204-5260</span>
+              <span className="eco__btn-main">054-397-9023</span>
             </a>
             <span className="small eco__cta-note">受付時間 平日 10:00 – 18:00</span>
           </div>

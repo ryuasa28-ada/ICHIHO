@@ -1,6 +1,6 @@
 /* global React, ReactDOM, SiteHeader, SiteFooter, HOME, CONTACT, CONTACT_ECO */
 /* 高く売るコツ — リユース事業のサブページ */
-const TEL2 = "070-9204-5260";
+const TEL2 = "054-397-9023";
 const TELHREF2 = "tel:" + TEL2.replace(/-/g, "");
 const LINE2 = "#";
 const S2 = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round" };

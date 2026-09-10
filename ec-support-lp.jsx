@@ -6,7 +6,7 @@
    文言・セクション構成は既存のまま。 */
 const { useState: useEcState, useEffect: useEcEffect } = React;
 
-const EC_TEL = "070-9204-5260";
+const EC_TEL = "054-397-9023";
 
 const ES = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round" };
 function EI({ d, box = 24 }) { return <svg viewBox={`0 0 ${box} ${box}`} {...ES}>{d}</svg>; }

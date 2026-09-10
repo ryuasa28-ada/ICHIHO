@@ -11,28 +11,6 @@
 <link rel="stylesheet" href="colors_and_type.css">
 <link rel="stylesheet" href="pages.css">
 <link rel="stylesheet" href="reuse-page.css">
-<script>
-/* テーマ切替ボタンの表示判定と、保存済みテーマの先行適用。
-
-   RP_FORCE_DEV_TOOLS = true の間は、本番ホスト（GitHub Pages）でも
-   切替ボタンが表示される。先方に赤青版と緑版を見比べていただくための
-   一時的な措置。★配色が決まったら false に戻し、不採用テーマと
-   このスクリプト・ThemeToggle をまとめて削除すること。 */
-(function () {
-  var RP_FORCE_DEV_TOOLS = true;
-  var h = location.hostname;
-  window.__RP_DEV__ = RP_FORCE_DEV_TOOLS ||
-    location.protocol === "file:" ||
-    h === "localhost" || h === "127.0.0.1" || h === "[::1]" || /\.local$/.test(h);
-  if (!window.__RP_DEV__) return;
-  try {
-    /* リロード後もテーマを維持する。描画前に当てるのでチラつかない。 */
-    if (sessionStorage.getItem("rp-theme") === "green") {
-      document.documentElement.setAttribute("data-theme", "green");
-    }
-  } catch (e) {}
-})();
-</script>
 </head>
 <body class="page--reuse rp-body">
 <div id="root" data-screen-label="リユース事業"></div>

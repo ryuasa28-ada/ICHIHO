@@ -3,23 +3,9 @@
    スタイルは reuse-page.css（このページ専用）。文言は既存のものをそのまま使用。 */
 const { useState: useRpState, useEffect: useRpEffect, useRef: useRpRef } = React;
 
-const TEL = "070-9204-5260";
+const TEL = "054-397-9023";
 const TELHREF = "tel:" + TEL.replace(/-/g, "");
 const LINE = "https://line.me/R/ti/p/@379dykgb"; /* LINE公式アカウント 友だち追加 */
-
-/* ---------------------------------------------------------
-   写真素材。差し替えはここだけ直せば全箇所に反映される。
-   実ファイルは assets/photos/（README に手順あり）。
-   --------------------------------------------------------- */
-const PHOTOS = {
-  /* ギャラリーの流れるサムネイル。枚数は自由に増減できる。
-     追加するときは gallery-04.jpg … と連番で置いて、この配列に足すだけ。 */
-  slides: [
-    { src: "assets/photos/gallery-01.jpg", alt: "倉庫に積まれた家電の在庫" },
-    { src: "assets/photos/gallery-02.jpg", alt: "コンテナで仕分けたホビー・ゲーム商品" },
-    { src: "assets/photos/gallery-03.jpg", alt: "棚に並ぶ家電・PC周辺機器の在庫" },
-  ],
-};
 
 /* ---- inline stroke icons (lucide-style, 24x24) ---- */
 const S = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round" };
@@ -144,58 +130,6 @@ function FaqItem({ item, i }) {
   );
 }
 
-/* ---------------------------------------------------------
-   画像ギャラリー：サムネイルが途切れず一定速度で流れ続けるマーキー。
-   1セットを3回並べたトラックを2本置くことで、継ぎ目なくループする。
-   写真の枚数を変えるとトラックの幅も変わるので、--rp-gallery-items に
-   実際のコマ数を渡して CSS 側で再生時間を算出させる（速度が一定になる）。
-   --------------------------------------------------------- */
-const GALLERY_REPEAT = 3;
-
-function PhotoMarquee({ photos }) {
-  const set = [];
-  for (let r = 0; r < GALLERY_REPEAT; r++) {
-    photos.forEach((p, i) => set.push({ ...p, key: `${r}-${i}` }));
-  }
-  const track = (hidden) => (
-    <div className="rp-gallery__track" aria-hidden={hidden || undefined}>
-      {set.map((p) => (
-        <figure key={p.key} className="rp-gallery__item">
-          <img src={p.src} alt={hidden ? "" : p.alt} loading="lazy" />
-        </figure>
-      ))}
-    </div>
-  );
-  return <div className="rp-gallery" style={{ "--rp-gallery-items": set.length }}>{track(false)}{track(true)}</div>;
-}
-
-/* ---------------------------------------------------------
-   配色テーマの切替トグル。開発時のみレンダリングされる
-   （判定は business-reuse.html の先頭スクリプトで window.__RP_DEV__ に格納）。
-   --------------------------------------------------------- */
-const THEME_KEY = "rp-theme";
-
-function ThemeToggle() {
-  const [green, setGreen] = useRpState(
-    () => document.documentElement.getAttribute("data-theme") === "green"
-  );
-
-  const toggle = () => {
-    const next = !green;
-    if (next) document.documentElement.setAttribute("data-theme", "green");
-    else document.documentElement.removeAttribute("data-theme");
-    try { sessionStorage.setItem(THEME_KEY, next ? "green" : "default"); } catch (e) {}
-    setGreen(next);
-  };
-
-  return (
-    <button className="rp-themetoggle" onClick={toggle} aria-live="polite">
-      <span className="rp-themetoggle__dot" aria-hidden="true"></span>
-      {green ? "赤青バージョンに切り替え" : "緑バージョンに変更"}
-    </button>
-  );
-}
-
 function ReusePage() {
   /* スクロールで画面内に入った要素をフェード + スライドイン */
   useRpEffect(() => {
@@ -279,14 +213,6 @@ function ReusePage() {
               ))}
             </ol>
           </div>
-        </section>
-
-        {/* Gallery — スライドショー + 写真グリッド */}
-        <section className="rp-sec">
-          <div className="container">
-            <div className="rp-head"><Anchor text="GALLERY" /></div>
-          </div>
-          <PhotoMarquee photos={PHOTOS.slides} />
         </section>
 
         {/* Buy items */}
@@ -430,8 +356,6 @@ function ReusePage() {
         <a href={TELHREF} className="rp-fab__btn rp-fab__btn--call">{IC.telIc}電話</a>
         <a href={CONTACT_ECO} className="rp-fab__btn rp-fab__btn--mail">{IC.mail}メール</a>
       </nav>
-
-      {window.__RP_DEV__ && <ThemeToggle />}
     </>
   );
 }

@@ -14,7 +14,7 @@ function ThanksPage() {
             <h1 className="thanks__head">お問い合わせ<br />ありがとうございました</h1>
             <p className="lead thanks__body">
               内容を確認のうえ、担当者より2営業日以内にご返信いたします。
-              お急ぎの場合はお電話（<a href="tel:07092045260">070-9204-5260</a>）までご連絡ください。
+              お急ぎの場合はお電話（<a href="tel:0543979023">054-397-9023</a>）までご連絡ください。
             </p>
             <div className="thanks__cta">
               <a href={HOME} className="btn btn--primary btn--lg">トップページへ戻る</a>

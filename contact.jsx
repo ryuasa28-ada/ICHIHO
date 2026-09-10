@@ -7,7 +7,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjyvvqny";
 /* _next は絶対 URL でないと Formspree が受け付けない。公開先に合わせて変更する。 */
 const THANKS_URL = "https://ryuasa28-ada.github.io/ICHIHO/thanks.html";
 
-const TEL = "070-9204-5260";
+const TEL = "054-397-9023";
 const MAIL = "info@tokai-onlineshop.jp";
 const LINE_URL = "https://line.me/R/ti/p/@379dykgb";
 

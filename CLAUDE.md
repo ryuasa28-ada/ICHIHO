@@ -115,10 +115,12 @@ python3 -m http.server 8000    # → http://localhost:8000/index.html
     ものに差し替える（`contact.jsx` 冒頭のコメント参照）。
   - `name` 属性は Formspree のメール本文のラベルになる。`inquiry_type` / `company` /
     `name` / `tel` / `email` / `message` / `items`（eco のみ）で固定。
-- リユース事業ページの GALLERY は `reuse-lp.jsx` 冒頭の `PHOTOS.slides` だけを見ている。
-  実写は `assets/photos/gallery-NN.jpg`（1280×720 / JPEG 品質 82）。マーキーは
-  `--rp-gallery-items` にコマ数を渡してスクロール時間を算出するので、**枚数を増減しても
-  速度は変わらない**。差し替え手順は `assets/photos/README.md` にある。同フォルダの
-  `slide-*.svg` / `scene-*.svg` / `fv-01.svg` は現在どこからも参照されていない仮素材。
+- リユース事業ページの配色は `reuse-page.css` 冒頭の `:root` カラートークン（深緑
+  `--color-primary` + 黄緑 `--color-accent`）に集約されている。以前あった赤青／緑の
+  `data-theme` 切替と開発用トグルは、緑で確定したため削除済み。エイリアスの
+  `--rp-red` / `--rp-blue` という名前は初期配色の名残で、実体はどちらも緑。
+- リユース事業ページの GALLERY セクションは削除済み。`assets/photos/` の画像
+  （`gallery-*.jpg` の実写と `slide-*` / `scene-*` / `fv-01` の仮 SVG）は現在
+  どこからも参照されていない。
 - 全リンク・アセット参照が相対パス（`assets/...`、`business-ec.html`）なので、ファイルはリポジトリルート直下のフラット構成を維持する。サブディレクトリへ移すと Pages 上で壊れる。
 - 「プライバシーポリシー」「特定商取引法に基づく表記」は `href="#"` のままの未実装リンク。フッタ（`shared.jsx` / `site-tail.jsx`）と、お問い合わせフォームの注意書き横（`contact.jsx` の `.cpage__privacy-link`）にある。

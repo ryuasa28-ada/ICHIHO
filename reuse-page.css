@@ -5,47 +5,17 @@
    reuse-lp.css / pages.css は変更していないため、ここでの
    トークン定義・上書きはこのページ限定で閉じている。
 
-   配色はすべて下のカラートークン経由。`<html data-theme="green">` を
-   付けるとテーマが緑バージョンに切り替わる（レイアウトは不変）。
+   配色はすべて下のカラートークン経由。色を変えるときは
+   :root のトークンだけを触れば全体に反映される。
    ========================================================= */
 
 /* ---------------------------------------------------------
-   theme-default — レッド + ブルー
+   カラートークン — 深緑 + 黄緑
    --------------------------------------------------------- */
 :root {
-  --color-primary:        #0071BC;   /* 構造色：リンク・アンカー・主要ボタン */
-  --color-primary-deep:   #005791;
-  --color-accent:         #EE1C25;   /* 差し色：キーワード・チェック・頭文字 */
-  --color-accent-deep:    #C8121A;
-  --color-ink:            #142B3A;
-  --color-ink-deep:       #0C1E2A;
-  --color-ink-2:          #3D5568;
-  --color-mute:           #6C8194;
-  --color-line:           #DCE6F0;
-  --color-bg:             #FFFFFF;
-  --color-bg-2:           #F4F7FB;
-  --color-bg-3:           #E9EFF8;
-  --color-on-dark-anchor: #BEE0F5;   /* 濃色地の上のアンカー */
-  --color-on-dark-accent: #FFD2D4;
-  --color-footer-anchor:  #7FC2E8;
-
-  /* rgba() 用（影・半透明） */
-  --rgb-primary: 0, 113, 188;
-  --rgb-accent:  238, 28, 37;
-  --rgb-ink:     20, 43, 58;
-
-  /* テーマに依存しない色 */
-  --color-star:       #F5B301;
-  --color-line-brand: #06C755;
-}
-
-/* ---------------------------------------------------------
-   theme-green — 深緑 + 黄緑（変数名は default と同一）
-   --------------------------------------------------------- */
-[data-theme="green"] {
-  --color-primary:        #0B5D3B;
+  --color-primary:        #0B5D3B;   /* 構造色：リンク・アンカー・主要ボタン */
   --color-primary-deep:   #07452B;
-  --color-accent:         #6FA31C;
+  --color-accent:         #6FA31C;   /* 差し色：キーワード・チェック・頭文字 */
   --color-accent-deep:    #557D13;
   --color-ink:            #13281E;
   --color-ink-deep:       #0A1A12;
@@ -55,17 +25,24 @@
   --color-bg:             #FFFFFF;
   --color-bg-2:           #F4FAF5;
   --color-bg-3:           #E6F2E8;
-  --color-on-dark-anchor: #BFE6CB;
+  --color-on-dark-anchor: #BFE6CB;   /* 濃色地の上のアンカー */
   --color-on-dark-accent: #DCF0A8;
   --color-footer-anchor:  #8FD3A3;
 
+  /* rgba() 用（影・半透明） */
   --rgb-primary: 11, 93, 59;
   --rgb-accent:  111, 163, 28;
   --rgb-ink:     19, 40, 30;
+
+  /* 配色に依存しない色 */
+  --color-star:       #F5B301;
+  --color-line-brand: #06C755;
 }
 
 /* ---------------------------------------------------------
    内部エイリアス（各コンポーネントはこちらを参照）
+   red / blue という名前は初期配色の名残で、現在はどちらも
+   上の緑トークンを指す（--rp-red = 差し色、--rp-blue = 構造色）。
    --------------------------------------------------------- */
 :root {
   --rp-red:      var(--color-accent);
@@ -322,40 +299,6 @@
 }
 
 /* ---------------------------------------------------------
-   画像ギャラリー — サムネイルが途切れず流れ続けるマーキー
-   --------------------------------------------------------- */
-.rp-gallery {
-  position: relative; z-index: 1;
-  display: flex; overflow: hidden;
-  /* セクション幅いっぱいに流す */
-  width: 100%;
-  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-}
-.rp-gallery__track {
-  display: flex; flex-shrink: 0; align-items: center;
-  gap: 20px; padding-right: 20px;
-  /* 1 コマあたり約 4.35 秒。枚数が増減してもスクロール速度は変わらない。 */
-  animation: rpGallery calc(var(--rp-gallery-items, 12) * 4.35s) linear infinite;
-  will-change: transform;
-}
-@keyframes rpGallery { from { transform: translateX(0); } to { transform: translateX(-100%); } }
-.rp-gallery:hover .rp-gallery__track { animation-play-state: paused; }
-.rp-gallery__item {
-  flex-shrink: 0; margin: 0;
-  width: 320px; border-radius: 18px; overflow: hidden;
-  background: var(--rp-bg-3);
-  box-shadow: 0 12px 30px rgba(var(--rgb-ink), 0.12);
-}
-.rp-gallery__item img {
-  width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;
-}
-@media (max-width: 768px) {
-  .rp-gallery__track { gap: 14px; padding-right: 14px; animation-duration: calc(var(--rp-gallery-items, 12) * 3.2s); }
-  .rp-gallery__item { width: 220px; border-radius: 14px; }
-}
-
-/* ---------------------------------------------------------
    Items
    --------------------------------------------------------- */
 .rp-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -543,30 +486,6 @@
 @media (max-width: 899px) { .rp-body { padding-bottom: 68px; } }
 
 /* ---------------------------------------------------------
-   テーマ切替トグル（開発時のみ DOM に出力される）
-   --------------------------------------------------------- */
-.rp-themetoggle {
-  position: fixed; right: 20px; bottom: 20px; z-index: 90;
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 11px 18px; border-radius: 999px;
-  background: var(--color-ink); color: #fff;
-  font-family: var(--rp-round); font-size: 13px; font-weight: 700;
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 10px 28px rgba(var(--rgb-ink), 0.34);
-  cursor: pointer;
-  transition: transform var(--dur-state) var(--rp-ease), background var(--dur-micro) var(--rp-ease);
-}
-.rp-themetoggle:hover { transform: translateY(-2px); background: var(--color-ink-deep); }
-.rp-themetoggle__dot {
-  width: 13px; height: 13px; border-radius: 999px; flex-shrink: 0;
-  background: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(var(--rgb-accent), 0.28);
-}
-@media (max-width: 899px) {
-  .rp-themetoggle { bottom: 82px; right: 12px; padding: 9px 14px; font-size: 12px; }
-}
-
-/* ---------------------------------------------------------
    スクロール連動アニメーション
    --------------------------------------------------------- */
 [data-rp-reveal] {
@@ -580,7 +499,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   [data-rp-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .rp-gallery__track { animation: none; }
   .rp-btn:hover, .rp-item:hover { transform: none; }
 }
 
