@@ -111,8 +111,8 @@ python3 -m http.server 8000    # → http://localhost:8000/index.html
   振り分け、`_next` の URL（`THANKS_URL`）へ戻ってくる。`_gotcha` はハニーポット。
   - `_next` は**絶対 URL**でないと Formspree が受け付けない。既定は GitHub Pages の
     `thanks.html` を指しているので、localhost で送信すると公開版の完了ページに飛ぶ。
-  - 現在のエンドポイントは開発・検証用。本番では `info@tokai-onlineshop.jp` で発行した
-    ものに差し替える（`contact.jsx` 冒頭のコメント参照）。
+  - エンドポイントは本番用で確定済み。受信先 `info@tokai-onlineshop.jp` の設定は
+    Formspree のダッシュボード側にあり、リポジトリには入っていない。
   - `name` 属性は Formspree のメール本文のラベルになる。`inquiry_type` / `company` /
     `name` / `tel` / `email` / `message` / `items`（eco のみ）で固定。
 - リユース事業ページの配色は `reuse-page.css` 冒頭の `:root` カラートークン（深緑

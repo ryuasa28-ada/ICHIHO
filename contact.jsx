@@ -2,7 +2,8 @@
 const { useState: useContactState } = React;
 
 /* 送信は Formspree への通常の form POST。送信後は _next の thanks.html に戻る。
-   総合 / eco は同じエンドポイントを共用し、hidden の _subject で件名を振り分ける。 */
+   総合 / eco は同じエンドポイントを共用し、hidden の _subject で件名を振り分ける。
+   本番用エンドポイント。受信先は info@tokai-onlineshop.jp（Formspree 側で設定）。 */
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjyvvqny";
 /* _next は絶対 URL でないと Formspree が受け付けない。公開先に合わせて変更する。 */
 const THANKS_URL = "https://ryuasa28-ada.github.io/ICHIHO/thanks.html";
