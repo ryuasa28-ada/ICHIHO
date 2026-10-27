@@ -3,13 +3,13 @@ const { useState: useContactState } = React;
 
 /* 送信は Formspree への通常の form POST。送信後は _next の thanks.html に戻る。
    総合 / eco は同じエンドポイントを共用し、hidden の _subject で件名を振り分ける。
-   本番用エンドポイント。受信先は info@tokai-onlineshop.jp（Formspree 側で設定）。 */
+   本番用エンドポイント。受信先は tokai.onlineshop20@gmail.com（Formspree 側で設定）。 */
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjyvvqny";
 /* _next は絶対 URL でないと Formspree が受け付けない。公開先に合わせて変更する。 */
 const THANKS_URL = "https://ryuasa28-ada.github.io/ICHIHO/thanks.html";
 
 const TEL = "054-397-9023";
-const MAIL = "info@tokai-onlineshop.jp";
+const MAIL = "tokai.onlineshop20@gmail.com";
 const LINE_URL = "https://line.me/R/ti/p/@379dykgb";
 
 const VARIANTS = {
@@ -131,7 +131,7 @@ function ContactPage() {
             <div className="cpage__formwrap">
               {/*
                 Formspree エンドポイント（開発・検証用）
-                本番運用時は、info@tokai-onlineshop.jp で発行した本番用エンドポイントに
+                本番運用時は、tokai.onlineshop20@gmail.com で発行した本番用エンドポイントに
                 差し替えてください。現在は開発者アカウントの xjyvvqny を使用中。
                 総合 / eco の振り分けは hidden の _subject（件名）で行う。
               */}
